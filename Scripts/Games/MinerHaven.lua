@@ -113,10 +113,7 @@ local SectionBox = mainW:Section('Boxes', true)
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {
     flag = "BoxTp",
-    togglecolor = {
-        on = Color3.new(0, 1, 0), -- Green when toggled on
-        off = Color3.new(1, 0, 0) -- Red when toggled off
-    }
+    
 }, function()
     if mainW.flags.BoxTp then
         local bxs = game:GetService("Workspace").Boxes
