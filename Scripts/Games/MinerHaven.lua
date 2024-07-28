@@ -120,7 +120,7 @@ end
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local function autoTpToBoxes()
-    while true do
+    while mainW.flags.BoxTp do
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
         local bxs = game:GetService("Workspace").Boxes
