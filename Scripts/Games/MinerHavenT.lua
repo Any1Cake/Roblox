@@ -6,7 +6,7 @@ local Window = Rayfield:CreateWindow({
     LoadingTitle = "Loading Script",
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
-       Enabled = true,
+       Enabled =false,
        FolderName = nil, -- Create a custom folder for your hub/game
        FileName = "Big Hub"
     },
