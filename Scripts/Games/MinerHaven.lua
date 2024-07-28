@@ -109,7 +109,6 @@ Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 -- Box Section
 local SectionBox = mainW:Section('Boxes', true)
 
-
 -- Get the location of player
 local old = game.Players.LocalPlayer.Character:getChildren()
 for i=1,#old do  
