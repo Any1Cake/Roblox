@@ -128,3 +128,6 @@ local Dropdown = Tab:CreateDropdown({
     -- The variable (Option) is a table of strings for the current selected options
     end,
 })
+
+-- Auto Load on Value change
+Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
