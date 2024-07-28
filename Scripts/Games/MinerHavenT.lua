@@ -30,6 +30,34 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("Main", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Rebirth Farm")
 
+function loadLayouts()
+    task.spawn(function()
+        game:GetService("ReplicatedStorage").Layouts:InvokeServer("Load", getgenv().layoutone)
+        task.wait(getgenv().duration)
+        if MainTab.flags.autolayout2 then
+            game:GetService("ReplicatedStorage").Layouts:InvokeServer("Load", getgenv().layouttwo)
+        end
+    end)
+end
+
+function farmRebirth()
+    task.spawn(function()
+        while MainTab.flags.autoRebirth do
+            game:GetService("ReplicatedStorage").Rebirth:InvokeServer(26)
+            task.wait()
+        end
+    end)
+end
+
+function autoLoad()
+    task.spawn(function()
+        task.wait(0.75)
+        if MainTab.flags.autolayout1 then
+            loadLayouts()
+        end
+    end)
+end
+
 local Button = MainTab:CreateButton({
     Name = "Destroy UI",
     Callback = function()
@@ -42,13 +70,15 @@ local Toggle = MainTab:CreateToggle({
     CurrentValue = false,
     Flag = "autolayout1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-    -- The function that takes place when the toggle is pressed
-    -- The variable (Value) is a boolean on whether the toggle is true or false
+        if MainTab.flags.autolayout1 then
+            loadLayouts()
+            farmRebirth()
+        end
     end,
 })
 
 local Toggle = MainTab:CreateToggle({
-    Name = "Enable Second Layout?",
+    Name = "Second Layout",
     CurrentValue = false,
     Flag = "autolayout2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -57,12 +87,44 @@ local Toggle = MainTab:CreateToggle({
     end,
 })
 
+local Toggle = MainTab:CreateToggle({
+    Name = "Auto Rebirth",
+    CurrentValue = false,
+    Flag = "autoRebirth", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        farmRebirth()
+    end,
+})
+
 local Input = MainTab:CreateInput({
     Name = "Time Between Layouts",
     PlaceholderText = "Input Number",
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
-    -- The function that takes place when the input is changed
-    -- The variable (Text) is a string for the value in the text box
+        getgenv().duration = Text
+    end,
+})
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "First Layout",
+    Options = {"Layout1","Layout2","Layout3"},
+    CurrentOption = {"Layout1"},
+    MultipleOptions = false,
+    Flag = "layoutone", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+    -- The function that takes place when the selected option is changed
+    -- The variable (Option) is a table of strings for the current selected options
+    end,
+})
+
+local Dropdown = Tab:CreateDropdown({
+    Name = "Second Layout",
+    Options = {"Layout1","Layout2","Layout3"},
+    CurrentOption = {"Layout1"},
+    MultipleOptions = false,
+    Flag = "layouttwo", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+    -- The function that takes place when the selected option is changed
+    -- The variable (Option) is a table of strings for the current selected options
     end,
 })
