@@ -26,3 +26,33 @@ local Window = Rayfield:CreateWindow({
        Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
     }
 })
+
+local MainTab = Window:CreateTab("Main", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("Rebirth Farm")
+
+local Button = MainTab:CreateButton({
+    Name = "Button Example",
+    Callback = function()
+        Rayfield:Destroy()
+    end,
+ })
+
+local Toggle = MainTab:CreateToggle({
+    Name = "Auto Layouts",
+    CurrentValue = false,
+    Flag = "autolayout1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+    -- The function that takes place when the toggle is pressed
+    -- The variable (Value) is a boolean on whether the toggle is true or false
+    end,
+ })
+
+ local Toggle = MainTab:CreateToggle({
+    Name = "Enable Second Layout?",
+    CurrentValue = false,
+    Flag = "autolayout2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+    -- The function that takes place when the toggle is pressed
+    -- The variable (Value) is a boolean on whether the toggle is true or false
+    end,
+ })
