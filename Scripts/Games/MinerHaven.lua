@@ -120,25 +120,25 @@ end
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
-    if mainW.flags.BoxTp then
+    while true do
+      if mainW.flags.BoxTp then
         local bxs = game:GetService("Workspace").Boxes
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
         local i = 1
-
+  
         if #bxs:GetChildren() == 0 then
-            plr.Character.HumanoidRootPart.CFrame = lastPos
-            return
+          plr.Character.HumanoidRootPart.CFrame = lastPos
+        else
+          local v = bxs:GetChildren()[i]
+          char:MoveTo(v.Position)
+          wait(1)
+          i = i % #bxs:GetChildren() + 1
         end
-
-        while mainW.flags.BoxTp do
-            local v = bxs:GetChildren()[i]
-            char:MoveTo(v.Position)
-            wait(0.75)
-            i = i % #bxs:GetChildren() + 1
-        end
+      end
+      wait() -- Add a small delay to prevent high CPU usage
     end
-end)
+  end)
 
 -- Auto Open Box Function
 local function BoxOpener()
