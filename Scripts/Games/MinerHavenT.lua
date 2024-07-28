@@ -69,9 +69,11 @@ local Toggle = MainTab:CreateToggle({
     Name = "Auto Layouts",
     CurrentValue = false,
     Flag = "autolayout1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        loadLayouts()
-        farmRebirth()
+    Callback = function()
+        if MainTab.flags.autolayout1 then
+            loadLayouts()
+            farmRebirth()
+        end
     end,
 })
 
