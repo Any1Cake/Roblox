@@ -63,7 +63,7 @@ local Button = MainTab:CreateButton({
     Callback = function()
         Rayfield:Destroy()
     end,
- })
+})
 
 local Toggle = MainTab:CreateToggle({
     Name = "Auto Layouts",
