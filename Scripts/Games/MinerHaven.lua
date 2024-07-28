@@ -77,7 +77,7 @@ end)
 
 -- Select First Layout
 mainW:Dropdown("First Layout", {
-    default = 'First Layout',
+    default = nil,
     location = getgenv(),
     flag = "layoutone",
     list = {
@@ -91,7 +91,7 @@ end)
 
 -- Select Second Layout
 mainW:Dropdown("Second Layout", {
-    default = 'Second Layout',
+    default = nil,
     location = getgenv(),
     flag = "layoutwo",
     list = {
@@ -131,7 +131,7 @@ local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
 
             if #bxs:GetChildren() == 0 then
                 plr.Character.HumanoidRootPart.CFrame = lastPos
-                shouldTeleport = true
+                shouldTeleport = false
             else
                 if shouldTeleport then
                 local v = bxs:GetChildren()[i]
