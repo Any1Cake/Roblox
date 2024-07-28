@@ -114,12 +114,12 @@ local old = game.Players.LocalPlayer.Character:getChildren()
 for i=1,#old do  
     if old[i].Name == "HumanoidRootPart" then 
         lastPos = old[i].CFrame 
-    end 
+    end
 end
 
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
-local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
+local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
     while true do
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
@@ -137,6 +137,9 @@ local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
         wait() -- Add a small delay to prevent high CPU usage
     end
 end)
+
+local StoptptoBoxes = mainW:Toggle('Stop Tp to Boxes', {flag = "DisBoxTp",}, function()
+    mainW.flags.BoxTp = false
 
 -- Auto Open Box Function
 local function BoxOpener()
