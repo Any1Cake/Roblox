@@ -29,7 +29,7 @@ local Window = Rayfield:CreateWindow({
 
 
 
-==========================================================================
+
 --[[]
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
