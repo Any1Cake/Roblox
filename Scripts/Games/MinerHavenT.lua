@@ -68,9 +68,9 @@ local Button = MainTab:CreateButton({
 local Toggle = MainTab:CreateToggle({
     Name = "Auto Layouts",
     CurrentValue = false,
-    Flag = "autolayout1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function()
-        if MainTab.flags.autolayout1 then
+    Flag = "autolayout1",
+    Callback = function(Value)
+        if Value then
             loadLayouts()
             farmRebirth()
         end
