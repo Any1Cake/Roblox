@@ -119,8 +119,8 @@ end
 
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
-local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
-    while mainW.flags.BoxTp do
+local function autoTpToBoxes()
+    while true do
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
         local bxs = game:GetService("Workspace").Boxes
@@ -135,6 +135,12 @@ local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
             i = i % #bxs:GetChildren() + 1
         end
         wait() -- Add a small delay to prevent high CPU usage
+    end
+end
+
+local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
+    if mainW.flags.BoxTp then
+        autoTpToBoxes()
     end
 end)
 
