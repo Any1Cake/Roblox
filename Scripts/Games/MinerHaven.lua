@@ -120,19 +120,19 @@ end
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
-    while true do
+    while mainW.flags.BoxTp do
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
         local bxs = game:GetService("Workspace").Boxes
         local i = 1
 
-        if mainW.flags.BoxTp and #bxs:GetChildren() > 0 then
+        if #bxs:GetChildren() == 0 then
+            plr.Character.HumanoidRootPart.CFrame = lastPos
+        else
             local v = bxs:GetChildren()[i]
             char:MoveTo(v.Position)
             wait(0.75)
             i = i % #bxs:GetChildren() + 1
-        else
-            plr.Character.HumanoidRootPart.CFrame = lastPos
         end
         wait() -- Add a small delay to prevent high CPU usage
     end
@@ -168,6 +168,8 @@ mainW:Dropdown('Select Box', {
             'Regular',
             'Unreal',
             'Inferno',
+            'Cake Raffle',
+            'Pumkin',
             'Luxury',
             'Red-Banded',
             'Spectral',
