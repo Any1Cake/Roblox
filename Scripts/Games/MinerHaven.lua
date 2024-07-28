@@ -121,21 +121,18 @@ end
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
     while true do
-        if mainW.flags.BoxTp then
-            local bxs = game:GetService("Workspace").Boxes
-            local plr = game:GetService("Players").LocalPlayer
-            local char = plr.Character
-            local i = 1
-    
-            if #bxs:GetChildren() == 0 then
-                plr.Character.HumanoidRootPart.CFrame = lastPos
-                mainW.flags.BoxTp = false -- Reset the BoxTp flag
-            else
-                local v = bxs:GetChildren()[i]
-                char:MoveTo(v.Position)
-                wait(0.75)
-                i = i % #bxs:GetChildren() + 1
-            end
+        local plr = game:GetService("Players").LocalPlayer
+        local char = plr.Character
+        local bxs = game:GetService("Workspace").Boxes
+        local i = 1
+
+        if mainW.flags.BoxTp and #bxs:GetChildren() > 0 then
+            local v = bxs:GetChildren()[i]
+            char:MoveTo(v.Position)
+            wait(0.75)
+            i = i % #bxs:GetChildren() + 1
+        else
+            plr.Character.HumanoidRootPart.CFrame = lastPos
         end
         wait() -- Add a small delay to prevent high CPU usage
     end
