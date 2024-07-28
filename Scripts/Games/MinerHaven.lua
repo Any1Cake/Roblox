@@ -109,6 +109,9 @@ Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 -- Box Section
 local SectionBox = mainW:Section('Boxes', true)
 
+local testing = mainW:Toggle('test', {flag = "test1",}, function()
+    print 'Hello'
+
 -- Get the location of player
 local old = game.Players.LocalPlayer.Character:getChildren()
 for i=1,#old do  
