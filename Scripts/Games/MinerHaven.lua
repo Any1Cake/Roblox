@@ -143,10 +143,10 @@ end
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
     while true do
         if mainW.flags.BoxTp then
-        teleportPlayer()
+            teleportPlayer()
+        end
+        wait() -- Add a small delay to prevent high CPU usage
     end
-    wait() -- Add a small delay to prevent high CPU usage
-  end
 end)
 
 
