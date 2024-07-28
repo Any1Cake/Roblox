@@ -109,6 +109,14 @@ Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 -- Box Section
 local SectionBox = mainW:Section('Boxes', true)
 
+-- Get the location of player
+local old = game.Players.LocalPlayer.Character:getChildren()
+for i=1,#old do  
+    if old[i].Name == "HumanoidRootPart" then 
+        lastPos = old[i].CFrame 
+    end 
+end
+
 -- Auto Tp to Boxes
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
