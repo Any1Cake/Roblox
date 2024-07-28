@@ -121,28 +121,32 @@ end
 -- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
 local shouldTeleport = true
 
+local function teleportPlayer()
+    local plr = game:GetService("Players").LocalPlayer
+    local char = plr.Character
+    local bxs = game:GetService("Workspace").Boxes
+    local i = 1
+
+    if shouldTeleport then
+        if #bxs:GetChildren() == 0 then
+            plr.Character.HumanoidRootPart.CFrame = lastPos
+            shouldTeleport = false
+        else
+            local v = bxs:GetChildren()[i]
+            char:MoveTo(v.Position)
+            wait(0.75)
+            i = i % #bxs:GetChildren() + 1
+        end
+    end
+end
+
 local TptoBoxes = mainW:Toggle('Tp to Boxes', {flag = "BoxTp",}, function()
     while true do
         if mainW.flags.BoxTp then
-            local bxs = game:GetService("Workspace").Boxes
-            local plr = game:GetService("Players").LocalPlayer
-            local char = plr.Character
-            local i = 1
-
-            if #bxs:GetChildren() == 0 then
-                plr.Character.HumanoidRootPart.CFrame = lastPos
-                shouldTeleport = false
-            else
-                if shouldTeleport then
-                local v = bxs:GetChildren()[i]
-                char:MoveTo(v.Position)
-                wait(0.75)
-                i = i % #bxs:GetChildren() + 1
-                end
-            end
-        end
-        wait() -- Add a small delay to prevent high CPU usage
+        teleportPlayer()
     end
+    wait() -- Add a small delay to prevent high CPU usage
+  end
 end)
 
 
