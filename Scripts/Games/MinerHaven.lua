@@ -144,10 +144,6 @@ local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
     end
 end)
 
-local StoptptoBoxes = mainW:Toggle('Stop Tp to Boxes', {flag = "DisBoxTp",}, function()
-    mainW.flags.BoxTp = false
-end)
-
 -- Auto Open Box Function
 local function BoxOpener()
     task.spawn(function()
@@ -190,8 +186,17 @@ mainW:Dropdown('Select Box', {
     -- Additional functionality when selected
 end)
 
--- NPC Section
-local SectionNPC = mainW:Section('NPC', true)
+-- Misc Section
+local SectionNPC = mainW:Section('Misc', true)
+
+local AutoKick = mainW:Toggle('Auto Leave', {flag = "DisBoxTp",}, function()
+    while mainW.flags.DisBoxTp do
+        if #game.Players:GetChildren() > 1 then
+            game.Players.LocalPlayer:Kick("Someone Joined")
+        end
+        wait(1) -- Add a delay to avoid excessive checks
+    end
+end)
 
 -- Function to open a shop in the PlayerGui
 local function openShop(shopName)
