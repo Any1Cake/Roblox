@@ -6,7 +6,7 @@ local Window = Rayfield:CreateWindow({
     LoadingTitle = "Loading Script",
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
-       Enabled = false,
+       Enabled = true,
        FolderName = nil, -- Create a custom folder for your hub/game
        FileName = "Big Hub"
     },
@@ -92,7 +92,9 @@ local Toggle = MainTab:CreateToggle({
     CurrentValue = false,
     Flag = "autoRebirth", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        farmRebirth()
+        if .Value then
+            farmRebirth()
+        end
     end,
 })
 
@@ -105,7 +107,7 @@ local Input = MainTab:CreateInput({
     end,
 })
 
-local Dropdown = Tab:CreateDropdown({
+local Dropdown = MainTab:CreateDropdown({
     Name = "First Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
@@ -117,7 +119,7 @@ local Dropdown = Tab:CreateDropdown({
     end,
 })
 
-local Dropdown = Tab:CreateDropdown({
+local Dropdown = MainTab:CreateDropdown({
     Name = "Second Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
@@ -131,3 +133,5 @@ local Dropdown = Tab:CreateDropdown({
 
 -- Auto Load on Value change
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
+
+Rayfield:LoadConfiguration()
