@@ -140,6 +140,7 @@ end)
 
 local StoptptoBoxes = mainW:Toggle('Stop Tp to Boxes', {flag = "DisBoxTp",}, function()
     mainW.flags.BoxTp = false
+end)
 
 -- Auto Open Box Function
 local function BoxOpener()
