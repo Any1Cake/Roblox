@@ -1,0 +1,579 @@
+_G.WS = "135";
+local Humanoid =
+game:GetService("Players").LocalPlayer.Character.Humanoid;
+Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+Humanoid.WalkSpeed = _G.WS;
+end)
+Humanoid.WalkSpeed = _G.WS;
+local UserInputService = game:GetService("UserInputService")
+local localPlayer = game.Players.LocalPlayer
+local character
+local humanoid
+local canDoubleJump = false
+local hasDoubleJumped = false
+local oldPower
+local TIME_BETWEEN_JUMPS = 0.2
+local DOUBLE_JUMP_POWER_MULTIPLIER = 2
+function onJumpRequest()
+if not character or not humanoid or not character:IsDescendantOf(workspace) or
+humanoid:GetState() == Enum.HumanoidStateType.Dead then
+return
+end
+if canDoubleJump and not hasDoubleJumped then
+hasDoubleJumped = true
+humanoid.JumpPower = oldPower * DOUBLE_JUMP_POWER_MULTIPLIER
+humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+end
+end
+local function characterAdded(newCharacter)
+character = newCharacter
+humanoid = newCharacter:WaitForChild("Humanoid")
+hasDoubleJumped = false
+canDoubleJump = false
+oldPower = humanoid.JumpPower
+humanoid.StateChanged:connect(function(old, new)
+if new == Enum.HumanoidStateType.Landed then
+canDoubleJump = false
+hasDoubleJumped = false
+humanoid.JumpPower = oldPower
+elseif new == Enum.HumanoidStateType.Freefall then
+wait(TIME_BETWEEN_JUMPS)
+canDoubleJump = true
+end
+end)
+end
+if localPlayer.Character then
+characterAdded(localPlayer.Character)
+end
+localPlayer.CharacterAdded:connect(characterAdded)
+UserInputService.JumpRequest:connect(onJumpRequest)
+
+local jump = 120 -- Add the amount of jump power you want here!
+spawn(function()
+while wait() do
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = jump
+end
+end)
+local ScreenGui = Instance.new("ScreenGui")
+local MenuFrame = Instance.new("Frame")
+local MenuTitlebar = Instance.new("Frame")
+local TitleMenu = Instance.new("TextLabel")
+local Utilities = Instance.new("TextButton")
+local AutoSetup = Instance.new("TextButton")
+local HideMenu = Instance.new("TextButton")
+local OreBoost = Instance.new("TextButton")
+local Util = Instance.new("Frame")
+local UtilitiesTitlebar = Instance.new("Frame")
+local BackMenuU = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+local AutoRebirth = Instance.new("TextButton")
+local GrabCrates = Instance.new("TextButton")
+local GrabMM = Instance.new("TextButton")
+local TTokens = Instance.new("TextButton")
+local CTokens = Instance.new("TextButton")
+local MSpeed = Instance.new("TextButton")
+local JPower = Instance.new("TextButton")
+local RemoteOn = Instance.new("TextButton")
+local RemoteOff = Instance.new("TextButton")
+local OBoost = Instance.new("Frame")
+local BoostTitlebar = Instance.new("Frame")
+local BackMenuB = Instance.new("TextButton")
+local AutoLayout = Instance.new("TextButton")
+local OreBoost_2 = Instance.new("TextButton")
+local TextLabel_2 = Instance.new("TextLabel")
+local TextBox = Instance.new("TextBox")
+local OpenMenu = Instance.new("TextButton")
+local ASetup = Instance.new("Frame")
+local SetupTitlebar = Instance.new("Frame")
+local BackMenuS = Instance.new("TextButton")
+local CatalyzedStar = Instance.new("TextButton")
+local NeutronStar = Instance.new("TextButton")
+local MorningStar = Instance.new("TextButton")
+local TextLabel_3 = Instance.new("TextLabel")
+ScreenGui.Parent = game.CoreGui
+MenuFrame.Name = "MenuFrame"
+MenuFrame.Parent = ScreenGui
+MenuFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+MenuFrame.BorderSizePixel = 0
+MenuFrame.Position = UDim2.new(0.85852313, 0, 0.180689663, 0)
+MenuFrame.Size = UDim2.new(0, 202, 0, 239)
+MenuFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
+MenuFrame.Style = Enum.FrameStyle.RobloxSquare
+MenuFrame.Visible = false
+MenuTitlebar.Name = "MenuTitlebar"
+MenuTitlebar.Parent = MenuFrame
+
+MenuTitlebar.BackgroundColor3 = Color3.new(1, 1, 1)
+MenuTitlebar.Position = UDim2.new(-0.0420792066, 0, -0.0334728025, 0)
+MenuTitlebar.Size = UDim2.new(0, 201, 0, 51)
+MenuTitlebar.Style = Enum.FrameStyle.RobloxSquare
+TitleMenu.Name = "TitleMenu"
+TitleMenu.Parent = MenuFrame
+TitleMenu.BackgroundColor3 = Color3.new(1, 1, 1)
+TitleMenu.BackgroundTransparency = 1
+TitleMenu.Position = UDim2.new(-0.0396039598, 0, -0.0292887036, 0)
+TitleMenu.Size = UDim2.new(0, 202, 0, 51)
+TitleMenu.Font = Enum.Font.SourceSans
+TitleMenu.Text = "Masters Collection Menu"
+TitleMenu.TextColor3 = Color3.new(1, 1, 1)
+TitleMenu.TextSize = 20
+Utilities.Name = "Utilities"
+Utilities.Parent = MenuFrame
+Utilities.BackgroundColor3 = Color3.new(1, 1, 1)
+Utilities.Position = UDim2.new(0.0990099013, 0, 0.252595186, 0)
+Utilities.Size = UDim2.new(0, 148, 0, 37)
+Utilities.Style = Enum.ButtonStyle.RobloxRoundButton
+Utilities.Font = Enum.Font.SourceSans
+Utilities.Text = "Utilities"
+Utilities.TextSize = 14
+Utilities.MouseButton1Click:connect(function()
+MenuFrame.Visible = false
+Util.Visible = true
+end)
+AutoSetup.Name = "AutoSetup"
+AutoSetup.Parent = MenuFrame
+AutoSetup.BackgroundColor3 = Color3.new(1, 1, 1)
+AutoSetup.Position = UDim2.new(0.0990099013, 0, 0.465043187, 0)
+AutoSetup.Size = UDim2.new(0, 148, 0, 37)
+AutoSetup.Style = Enum.ButtonStyle.RobloxRoundButton
+AutoSetup.Font = Enum.Font.SourceSans
+AutoSetup.Text = "Auto Setup"
+AutoSetup.TextSize = 14
+AutoSetup.MouseButton1Click:connect(function()
+MenuFrame.Visible = false
+ASetup.Visible = true
+end)
+HideMenu.Name = "HideMenu"
+HideMenu.Parent = MenuFrame
+HideMenu.BackgroundColor3 = Color3.new(1, 1, 1)
+HideMenu.BackgroundTransparency = 1
+HideMenu.Position = UDim2.new(0.742574275, 0, 0.927824259, 0)
+HideMenu.Size = UDim2.new(0, 69, 0, 17)
+HideMenu.Font = Enum.Font.SourceSans
+HideMenu.Text = "Hide"
+HideMenu.TextColor3 = Color3.new(1, 1, 1)
+HideMenu.TextSize = 14
+HideMenu.MouseButton1Click:connect(function()
+MenuFrame.Visible = false
+OpenMenu.Visible = true
+end)
+
+OreBoost.Name = "OreBoost"
+OreBoost.Parent = MenuFrame
+OreBoost.BackgroundColor3 = Color3.new(1, 1, 1)
+OreBoost.Position = UDim2.new(0.0990099013, 0, 0.670064151, 0)
+OreBoost.Size = UDim2.new(0, 148, 0, 37)
+OreBoost.Style = Enum.ButtonStyle.RobloxRoundButton
+OreBoost.Font = Enum.Font.SourceSans
+OreBoost.Text = "Ore Booster"
+OreBoost.TextSize = 14
+OreBoost.MouseButton1Click:connect(function()
+MenuFrame.Visible = false
+OBoost.Visible = true
+end)
+Util.Name = "Util"
+Util.Parent = ScreenGui
+Util.BackgroundColor3 = Color3.new(1, 1, 1)
+Util.Position = UDim2.new(0.857142806, 0, 0.183448285, 0)
+Util.Size = UDim2.new(0, 202, 0, 239)
+Util.Visible = false
+Util.Style = Enum.FrameStyle.RobloxSquare
+UtilitiesTitlebar.Name = "UtilitiesTitlebar"
+UtilitiesTitlebar.Parent = Util
+UtilitiesTitlebar.BackgroundColor3 = Color3.new(1, 1, 1)
+UtilitiesTitlebar.Position = UDim2.new(-0.0445544571, 0, -0.0376569033, 0)
+UtilitiesTitlebar.Size = UDim2.new(0, 201, 0, 51)
+UtilitiesTitlebar.Style = Enum.FrameStyle.RobloxSquare
+BackMenuU.Name = "BackMenuU"
+BackMenuU.Parent = Util
+BackMenuU.BackgroundColor3 = Color3.new(1, 1, 1)
+BackMenuU.BackgroundTransparency = 1
+BackMenuU.Position = UDim2.new(0.742574275, 0, 0.927824259, 0)
+BackMenuU.Size = UDim2.new(0, 69, 0, 17)
+BackMenuU.Font = Enum.Font.SourceSans
+BackMenuU.Text = "Back"
+BackMenuU.TextColor3 = Color3.new(1, 1, 1)
+BackMenuU.TextSize = 14
+BackMenuU.MouseButton1Click:connect(function()
+Util.Visible = false
+MenuFrame.Visible = true
+end)
+TextLabel.Parent = Util
+TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel.BackgroundTransparency = 1
+TextLabel.Position = UDim2.new(-0.0396039598, 0, -0.0251046028, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "Utilities"
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextSize = 24
+AutoRebirth.Name = "AutoRebirth"
+AutoRebirth.Parent = Util
+AutoRebirth.BackgroundColor3 = Color3.new(1, 1, 1)
+AutoRebirth.Position = UDim2.new(0.0148514882, 0, 0.22594142, 0)
+AutoRebirth.Size = UDim2.new(0, 83, 0, 23)
+
+AutoRebirth.Style = Enum.ButtonStyle.RobloxRoundButton
+AutoRebirth.Font = Enum.Font.SourceSans
+AutoRebirth.Text = "Auto Rebirth"
+AutoRebirth.TextSize = 14
+AutoRebirth.MouseButton1Click:connect(function()
+while true do
+game.ReplicatedStorage.Rebirth:InvokeServer()
+wait(0.1)
+end
+end)
+GrabCrates.Name = "GrabCrates"
+GrabCrates.Parent = Util
+GrabCrates.BackgroundColor3 = Color3.new(1, 1, 1)
+GrabCrates.Position = UDim2.new(0.544554472, 0, 0.22594142, 0)
+GrabCrates.Size = UDim2.new(0, 83, 0, 23)
+GrabCrates.Style = Enum.ButtonStyle.RobloxRoundButton
+GrabCrates.Font = Enum.Font.SourceSans
+GrabCrates.Text = "GrabCrates"
+GrabCrates.TextSize = 14
+GrabCrates.MouseButton1Click:connect(function()
+while wait() do
+while wait(2) do
+for _,v in pairs(game.Workspace:GetChildren()) do
+if string.match(v.Name, "DiamondCrate") or string.match(v.Name, "ResearchCrate") or
+string.match(v.Name, "GoldenCrate") or string.match(v.Name, "CrystalCrate") or
+string.match(v.Name, "Pumpkin") or string.match(v.Name, "MegaPumpkin") or
+string.match(v.Name, "Pumpkin") or string.match(v.Name, "LuckyCrate") or
+string.match(v.Name, "ExecutiveCrate") or string.match(v.Name, "GiftCrate") or
+string.match(v.Name, "ShadowCrate")then
+v.CFrame =
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame+Vector3.new(0,0,0)
+v.CanCollide = false
+v.Transparency = 1
+for _,v in pairs(game.Workspace.Shadows:GetChildren()) do
+if string.match(v.Name, "ShadowCrate") or string.match(v.Name, "MegaPumpkin") then
+v.CFrame =
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame+Vector3.new(0,0,0)
+v.CanCollide = false
+v.Transparency = 1
+end
+end
+end
+end
+end
+end
+end)
+GrabMM.Name = "GrabMM"
+GrabMM.Parent = Util
+GrabMM.BackgroundColor3 = Color3.new(1, 1, 1)
+GrabMM.Position = UDim2.new(0.0198019929, 0, 0.364016712, 0)
+GrabMM.Size = UDim2.new(0, 83, 0, 23)
+GrabMM.Style = Enum.ButtonStyle.RobloxRoundButton
+GrabMM.Font = Enum.Font.SourceSans
+GrabMM.Text = "Grab MM"
+GrabMM.TextSize = 14
+GrabMM.MouseButton1Click:connect(function()
+thing = game.Workspace.Market.Hitfox
+
+thing.CFrame =
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame+Vector3.new(math.random(
+0,0),0,math.random(0,0))
+thing.Transparency = 0
+thing.BrickColor = BrickColor.new(255,0,100)
+tell = Instance.new("SurfaceGui",thing)
+tell2 = Instance.new("TextLabel",tell)
+tell2.Size = UDim2.new(0, 800, 0, 750)
+tell2.TextWrapped= true
+tell2.TextScaled = true
+tell2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+tell2.TextColor3 = Color3.fromRGB(255, 255, 255)
+tell2.Text = "Click Me!"
+end)
+TTokens.Name = "TTokens"
+TTokens.Parent = Util
+TTokens.BackgroundColor3 = Color3.new(1, 1, 1)
+TTokens.Position = UDim2.new(0.544554472, 0, 0.364016712, 0)
+TTokens.Size = UDim2.new(0, 83, 0, 23)
+TTokens.Style = Enum.ButtonStyle.RobloxRoundButton
+TTokens.Font = Enum.Font.SourceSans
+TTokens.Text = "Twitch Tokens"
+TTokens.TextSize = 14
+TTokens.MouseButton1Click:connect(function()
+while wait() do
+while wait(1) do
+game.Players.LocalPlayer.TwitchPoints.Value =
+game.Players.LocalPlayer.TwitchPoints.Value +50
+end
+end
+end)
+CTokens.Name = "CTokens"
+CTokens.Parent = Util
+CTokens.BackgroundColor3 = Color3.new(1, 1, 1)
+CTokens.Position = UDim2.new(0.0198019929, 0, 0.497907937, 0)
+CTokens.Size = UDim2.new(0, 83, 0, 23)
+CTokens.Style = Enum.ButtonStyle.RobloxRoundButton
+CTokens.Font = Enum.Font.SourceSans
+CTokens.Text = "Clover Tokens"
+CTokens.TextSize = 14
+CTokens.MouseButton1Click:connect(function()
+while wait() do
+while wait(1) do
+game.Players.LocalPlayer.Clovers.Value = game.Players.LocalPlayer.Clovers.Value
++100
+end
+end
+end)
+MSpeed.Name = "MSpeed"
+MSpeed.Parent = Util
+MSpeed.BackgroundColor3 = Color3.new(1, 1, 1)
+MSpeed.Position = UDim2.new(0.544554472, 0, 0.497907937, 0)
+MSpeed.Size = UDim2.new(0, 83, 0, 23)
+MSpeed.Style = Enum.ButtonStyle.RobloxRoundButton
+MSpeed.Font = Enum.Font.SourceSans
+MSpeed.Text = "Walk Speed"
+
+MSpeed.TextSize = 14
+MSpeed.MouseButton1Click:connect(function()
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 80
+end)
+JPower.Name = "JPower"
+JPower.Parent = Util
+JPower.BackgroundColor3 = Color3.new(1, 1, 1)
+JPower.Position = UDim2.new(0.0198019929, 0, 0.631799161, 0)
+JPower.Size = UDim2.new(0, 83, 0, 23)
+JPower.Style = Enum.ButtonStyle.RobloxRoundButton
+JPower.Font = Enum.Font.SourceSans
+JPower.Text = "Jump Power"
+JPower.TextSize = 14
+JPower.MouseButton1Click:connect(function()
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = 180
+end)
+RemoteOn.Name = "RemoteOn"
+RemoteOn.Parent = Util
+RemoteOn.BackgroundColor3 = Color3.new(1, 1, 1)
+RemoteOn.Position = UDim2.new(0.544554472, 0, 0.631799161, 0)
+RemoteOn.Size = UDim2.new(0, 83, 0, 23)
+RemoteOn.Style = Enum.ButtonStyle.RobloxRoundButton
+RemoteOn.Font = Enum.Font.SourceSans
+RemoteOn.Text = "Remote On"
+RemoteOn.TextSize = 14
+RemoteOn.MouseButton1Click:connect(function()
+x = 1;
+while(x>0) do
+wait (0.3)
+game.ReplicatedStorage.RemoteDrop:FireServer()
+end
+end)
+RemoteOff.Name = "RemoteOff"
+RemoteOff.Parent = Util
+RemoteOff.BackgroundColor3 = Color3.new(1, 1, 1)
+RemoteOff.Position = UDim2.new(0.544554472, 0, 0.753138065, 0)
+RemoteOff.Size = UDim2.new(0, 83, 0, 23)
+RemoteOff.Style = Enum.ButtonStyle.RobloxRoundButton
+RemoteOff.Font = Enum.Font.SourceSans
+RemoteOff.Text = "Remote Off"
+RemoteOff.TextSize = 14
+RemoteOff.MouseButton1Click:connect(function()
+x = 0;
+end)
+OBoost.Name = "OBoost"
+OBoost.Parent = ScreenGui
+OBoost.BackgroundColor3 = Color3.new(1, 1, 1)
+OBoost.Position = UDim2.new(0.856797814, 0, 0.180689663, 0)
+OBoost.Size = UDim2.new(0, 202, 0, 239)
+OBoost.Visible = false
+OBoost.Style = Enum.FrameStyle.RobloxSquare
+BoostTitlebar.Name = "BoostTitlebar"
+BoostTitlebar.Parent = OBoost
+BoostTitlebar.BackgroundColor3 = Color3.new(1, 1, 1)
+
+BoostTitlebar.Position = UDim2.new(-0.0445544571, 0, -0.0376569033, 0)
+BoostTitlebar.Size = UDim2.new(0, 201, 0, 51)
+BoostTitlebar.Style = Enum.FrameStyle.RobloxSquare
+BackMenuB.Name = "BackMenuB"
+BackMenuB.Parent = OBoost
+BackMenuB.BackgroundColor3 = Color3.new(1, 1, 1)
+BackMenuB.BackgroundTransparency = 1
+BackMenuB.Position = UDim2.new(0.742574275, 0, 0.927824259, 0)
+BackMenuB.Size = UDim2.new(0, 69, 0, 17)
+BackMenuB.Font = Enum.Font.SourceSans
+BackMenuB.Text = "Back"
+BackMenuB.TextColor3 = Color3.new(1, 1, 1)
+BackMenuB.TextSize = 14
+BackMenuB.MouseButton1Click:connect(function()
+OBoost.Visible = false
+MenuFrame.Visible = true
+end)
+AutoLayout.Name = "AutoLayout"
+AutoLayout.Parent = OBoost
+AutoLayout.BackgroundColor3 = Color3.new(1, 1, 1)
+AutoLayout.Position = UDim2.new(0.103960395, 0, 0.684708416, 0)
+AutoLayout.Size = UDim2.new(0, 148, 0, 37)
+AutoLayout.Style = Enum.ButtonStyle.RobloxRoundButton
+AutoLayout.Font = Enum.Font.SourceSans
+AutoLayout.Text = "Auto Load Layout 1: OFF"
+AutoLayout.TextSize = 14
+local autoload1 = false
+AutoLayout.MouseButton1Click:connect(function()
+if autoload1 == false then
+autoload1 = true
+AutoLayout.Text = "Auto Load Layout 1: ON"
+else
+autoload1 = false
+AutoLayout.Text = "Auto Load Layout 1: OFF"
+end
+end)
+spawn(function()
+while true do
+wait()
+if autoload1 == true then
+game.Players.LocalPlayer.PlayerGui.GUI.Menu.Menu.Sounds.Message.Volume = 0
+game.Players.LocalPlayer.PlayerGui.GUI.Notifications.Visible = false
+game.ReplicatedStorage.Layouts:InvokeServer("Load","Layout1")
+else
+game.Players.LocalPlayer.PlayerGui.GUI.Menu.Menu.Sounds.Message.Volume = 0.5
+game.Players.LocalPlayer.PlayerGui.GUI.Notifications.Visible = true
+end
+end
+end)
+OreBoost_2.Name = "OreBoost"
+OreBoost_2.Parent = OBoost
+OreBoost_2.BackgroundColor3 = Color3.new(1, 1, 1)
+OreBoost_2.Position = UDim2.new(0.101485148, 0, 0.49318096, 0)
+
+OreBoost_2.Size = UDim2.new(0, 148, 0, 37)
+OreBoost_2.Style = Enum.ButtonStyle.RobloxRoundButton
+OreBoost_2.Font = Enum.Font.SourceSans
+OreBoost_2.Text = "Boost Ore: OFF"
+OreBoost_2.TextSize = 14
+local boost = false
+OreBoost_2.MouseButton1Click:connect(function()
+if boost == false then
+boost = true
+OreBoost_2.Text = "Boost Ore: ON"
+else
+boost = false
+OreBoost_2.Text = "Boost Ore: OFF"
+end
+end)
+spawn(function()
+while true do
+wait()
+if boost == true then
+local tyc = workspace.Tycoons:GetChildren()
+for i=1,#tyc do
+local basepart = tyc[i]:GetChildren()
+for i=1,#basepart do
+if basepart[i].ClassName == "Model" then
+if basepart[i].Model:findFirstChild("Upgrade") then
+if basepart[i].Model.Upgrade:findFirstChild("Cloned") then
+else
+local decoy = basepart[i].Model.Upgrade:Clone()
+decoy.Parent = basepart[i].Model
+decoy.Name = "UpgradeDecoy"
+local tag = Instance.new("StringValue",basepart[i].Model.Upgrade)
+tag.Name = "Cloned"
+local deco = basepart[i].Model.Upgrade:GetChildren()
+for i=1,#deco do
+if deco[i].ClassName == "ParticleEmitter" then
+deco[i]:remove()
+end
+if deco[i].Name == "Mesh" then
+deco[i]:remove()
+end
+if deco[i].Name == "Smoke" then
+deco[i]:remove()
+end
+if deco[i].Name == "Fire" then
+deco[i]:remove()
+end
+end
+if basepart[i].Model.Upgrade:findFirstChild("Error") then
+basepart[i].Model.Upgrade.Error.Volume = 0
+end
+basepart[i].Model.Upgrade.Transparency = 1
+basepart[i].Model.Upgrade.Size = Vector3.new(5,5,5)
+basepart[i].Model.Upgrade.CFrame =
+CFrame.new(workspace.Tycoons[tostring(game.Players.LocalPlayer.PlayerTycoon.Value)]
+[TextBox.Text].Model.Drop.Position)
+end
+end
+
+end
+end
+end
+end
+end
+end)
+TextLabel_2.Parent = OBoost
+TextLabel_2.BackgroundColor3 = Color3.new(1, 1, 1)
+TextLabel_2.BackgroundTransparency = 1
+TextLabel_2.Position = UDim2.new(-0.0247524753, 0, -0.0292887036, 0)
+TextLabel_2.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_2.Font = Enum.Font.SourceSans
+TextLabel_2.Text = "Ore Booster"
+TextLabel_2.TextColor3 = Color3.new(1, 1, 1)
+TextLabel_2.TextSize = 24
+TextBox.Parent = OBoost
+TextBox.BackgroundColor3 = Color3.new(1, 1, 1)
+TextBox.Position = UDim2.new(0.103960402, 0, 0.22594142, 0)
+TextBox.Size = UDim2.new(0, 148, 0, 54)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.Text = "Enter Mine Name, Case Sensitive: E.g. \"Basic Iron Mine\""
+TextBox.TextScaled = true
+TextBox.TextSize = 14
+TextBox.TextWrapped = true
+OpenMenu.Name = "OpenMenu"
+OpenMenu.Parent = ScreenGui
+OpenMenu.BackgroundColor3 = Color3.new(1, 1, 1)
+OpenMenu.Position = UDim2.new(0.473775059, 0, 0.79724133, 0)
+OpenMenu.Size = UDim2.new(0, 76, 0, 31)
+OpenMenu.Style = Enum.ButtonStyle.RobloxRoundButton
+OpenMenu.Font = Enum.Font.SourceSans
+OpenMenu.Text = "Open"
+OpenMenu.TextSize = 14
+OpenMenu.MouseButton1Click:connect(function()
+MenuFrame.Visible = true
+OpenMenu.Visible = false
+end)
+ASetup.Name = "ASetup"
+ASetup.Parent = ScreenGui
+ASetup.BackgroundColor3 = Color3.new(1, 1, 1)
+ASetup.Position = UDim2.new(0.858078897, 0, 0.182611465, 0)
+ASetup.Size = UDim2.new(0, 202, 0, 239)
+ASetup.Visible = false
+ASetup.Style = Enum.FrameStyle.RobloxSquare
+SetupTitlebar.Name = "SetupTitlebar"
+SetupTitlebar.Parent = ASetup
+SetupTitlebar.BackgroundColor3 = Color3.new(1, 1, 1)
+SetupTitlebar.Position = UDim2.new(-0.0445544571, 0, -0.0376569033, 0)
+SetupTitlebar.Size = UDim2.new(0, 201, 0, 51)
+SetupTitlebar.Style = Enum.FrameStyle.RobloxSquare
+BackMenuS.Name = "BackMenuS"
+BackMenuS.Parent = ASetup
+BackMenuS.BackgroundColor3 = Color3.new(1, 1, 1)
+
+BackMenuS.BackgroundTransparency = 1
+BackMenuS.Position = UDim2.new(0.742574275, 0, 0.927824259, 0)
+BackMenuS.Size = UDim2.new(0, 69, 0, 17)
+BackMenuS.Font = Enum.Font.SourceSans
+BackMenuS.Text = "Back"
+BackMenuS.TextColor3 = Color3.new(1, 1, 1)
+BackMenuS.TextSize = 14
+BackMenuS.MouseButton1Click:connect(function()
+ASetup.Visible = false
+MenuFrame.Visible = true
+end)
+CatalyzedStar.Name = "CatalyzedStar"
+CatalyzedStar.Parent = ASetup
+CatalyzedStar.BackgroundColor3 = Color3.new(1, 1, 1)
+CatalyzedStar.Position = UDim2.new(0.0990099013, 0, 0.438787639, 0)
+CatalyzedStar.Size = UDim2.new(0, 148, 0, 37)
+CatalyzedStar.Style = Enum.ButtonStyle.RobloxRoundButton
+CatalyzedStar.Font = Enum.Font.SourceSans
+CatalyzedStar.Text = "Catalyzed Star"
+CatalyzedStar.TextSize = 14
+CatalyzedStar.MouseButton1Click:connect(function()
+local function A()
+wait(0.5)
+game.ReplicatedStorage.PlaceItem:InvokeServer("Symmetryte Mine", CFrame.new(-97.5,
+206.799988, 194, -2.90066708e-07, 0, -1, 0, 1, 0, 1, 0, -2.90066708e-07))
+game.ReplicatedStorage.PlaceItem:InvokeServer("Discord Conveyor", CFrame.new(-97.5,
+202.299988, 209, -4.37113883e-08, 0, 1, 0, 1, 0, -1, 0, -4.37113883e-08))
+game.ReplicatedStorage.PlaceItem:InvokeServer("Discord Conveyor", CFrame.

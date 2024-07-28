@@ -1,0 +1,9 @@
+local bxs = game:GetService("Workspace").Boxes
+local plr = game:GetService("Players").LocalPlayer
+local char = plr.Character
+for i, v in pairs(bxs:GetChildren()) do
+  char:MoveTo(v.Position)
+  wait(1.5)
+end
+-- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
+--
