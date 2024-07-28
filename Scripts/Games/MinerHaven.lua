@@ -134,7 +134,7 @@ local function teleportPlayer()
         else
             local v = bxs:GetChildren()[i]
             char:MoveTo(v.Position)
-            wait(0.75)
+            wait(0.8)
             i = i % #bxs:GetChildren() + 1
         end
     end
