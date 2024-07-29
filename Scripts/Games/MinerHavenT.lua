@@ -102,8 +102,6 @@ local Input = MainTab:CreateInput({
     Name = "Time Between Layouts",
     PlaceholderText = "Input Number",
     RemoveTextAfterFocusLost = false,
-    Flag = "duration",
-    location = getgenv()
     Callback = function(Text)
         getgenv().duration = Text
     end,
