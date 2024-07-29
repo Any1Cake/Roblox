@@ -92,7 +92,7 @@ local Toggle = MainTab:CreateToggle({
     CurrentValue = false,
     Flag = "autoRebirth", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        if .Value then
+        if Value then
             farmRebirth()
         end
     end,
