@@ -1,7 +1,6 @@
 local games = {
-    [3398014311] = "Miner's Haven",
-    [258258996] = "Restaurant Tycoon 2",
-    [GAME_ID] = "GAME_NAME"
+    [258258996] = "Miner's Haven",
+    [3398014311] = "Restaurant Tycoon 2",
 }
 
 local isGameFound = false
