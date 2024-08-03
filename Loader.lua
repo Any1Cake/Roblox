@@ -24,14 +24,6 @@ for placeId, gameName in pairs(games) do
         isGameFound = true
         if not isGameExecuted then
             isGameExecutedValue.Value = SaveExecution
-            
-            local vu = game:GetService("VirtualUser")
-                Players.LocalPlayer.Idled:connect(function()
-                vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-                task.wait(1)
-                vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-            end)
-            
             local formattedGameName = gameName:gsub("%s+", "-") -- Replace spaces with your choice
             local scriptURL = "https://raw.githubusercontent.com/Any1Cake/Roblox/main/Scripts/Games/" .. formattedGameName .. ".lua"
             
@@ -41,6 +33,14 @@ for placeId, gameName in pairs(games) do
                 Icon = "rbxassetid://10885644072",
                 Duration = 2.5,
             })
+
+            local vu = game:GetService("VirtualUser")
+                Players.LocalPlayer.Idled:connect(function()
+                vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+                task.wait(1)
+                vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            end)
+            
             loadstring(game:HttpGet(scriptURL, true))()
         else
             CoreGui:SetCore("SendNotification", {
