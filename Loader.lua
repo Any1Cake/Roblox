@@ -33,7 +33,10 @@ for placeId, gameName in pairs(games) do
                 Icon = "rbxassetid://10885644072",
                 Duration = 2.5,
             })
+            
+            loadstring(game:HttpGet(scriptURL, true))()
 
+            
             local vu = game:GetService("VirtualUser")
                 Players.LocalPlayer.Idled:connect(function()
                 vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -41,7 +44,6 @@ for placeId, gameName in pairs(games) do
                 vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
             end)
             
-            loadstring(game:HttpGet(scriptURL, true))()
         else
             CoreGui:SetCore("SendNotification", {
                 Title = "Game Already Executed!",
