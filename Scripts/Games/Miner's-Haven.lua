@@ -216,3 +216,58 @@ for _, shopBtn in ipairs(shopButtons) do
         openShop(shopBtn.shop)
     end)
 end
+
+local locations = {
+    ["Tower"] = { -130, 225, 225 },
+    ["Draedon Cave"] = { -140, -112, -123 },
+    ["Bridge"] = { -329, 112, 531},
+}
+
+-- Function to get CFrame from location name
+local function getLocationCFrame(locationName)
+    if locationName == "Base" then
+        for i, v in pairs(workspace.Tycoons:GetDescendants()) do
+            if string.find(v.Name, 'Factory%d') and v.Owner.Value == game.Players.LocalPlayer.Name then
+                return v.Base.CFrame * CFrame.new(0, 15, 0)
+            end
+        end
+    else
+        local position = locations[locationName]
+        if position then
+            return CFrame.new(unpack(position))
+        end
+    end
+end
+
+-- Function to teleport the player
+local function teleportPlayer(destination)
+    local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local destinationCFrame = getLocationCFrame(destination)
+    if destinationCFrame then
+        plr.CFrame = destinationCFrame
+    end
+end
+
+-- Button click function
+local TpButton = mainW:Button("Teleport To", function()
+    local selectedLocation = getgenv().SelectTpPlace
+    if selectedLocation then
+        teleportPlayer(selectedLocation)
+    end
+end)
+
+-- Dropdown selection function
+mainW:Dropdown("Select Place", {
+    default = "Select Place",
+    location = getgenv(),
+    flag = "SelectTpPlace",
+    list = {
+        "Tower",
+        "Draedon Cave",
+        "Bridge",
+        "Base", -- New option for teleporting to the player's base
+    }
+}, function(selected)
+    -- Set the selected location in the global environment
+    getgenv().SelectTpPlace = selected
+end)
