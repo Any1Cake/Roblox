@@ -17,7 +17,7 @@ Players.LocalPlayer.Idled:connect(function()
     vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-function loadLayouts()
+local function loadLayouts()
     task.spawn(function()
         game:GetService("ReplicatedStorage").Layouts:InvokeServer("Load", getgenv().layoutone)
         task.wait(getgenv().duration)
@@ -27,7 +27,7 @@ function loadLayouts()
     end)
 end
 
-function farmRebirth()
+local function farmRebirth()
     task.spawn(function()
         while mainW.flags.aReb do
             game:GetService("ReplicatedStorage").Rebirth:InvokeServer(26)
@@ -36,7 +36,7 @@ function farmRebirth()
     end)
 end
 
-function autoLoad()
+local function autoLoad()
     task.spawn(function()
         task.wait(0.75)
         if mainW.flags.rebfarm then

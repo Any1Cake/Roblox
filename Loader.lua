@@ -1,4 +1,4 @@
-local SaveExecution = true -- Set the flag to true in BoolValue
+local SaveExecution = true 
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local isGameExecutedValue = replicatedStorage:FindFirstChild("IsGameExecuted")
@@ -11,15 +11,16 @@ end
 local games = {
     [258258996] = "Miner's Haven",
     [3398014311] = "Restaurant Tycoon 2",
+    [9772878203] = "Raise a Floppa 2"
 }
 
 local isGameFound = false
-local isGameExecuted = isGameExecutedValue.Value -- Retrieve the flag from BoolValue
+local isGameExecuted = isGameExecutedValue.Value
 local CoreGui = game:GetService("StarterGui")
 for placeId, gameName in pairs(games) do
     if game.PlaceId == placeId then
         isGameFound = true
-        if not isGameExecuted then -- Check if the game script has not been executed yet
+        if not isGameExecuted then
             isGameExecutedValue.Value = SaveExecution
             local formattedGameName = gameName:gsub("%s+", "-") -- Replace spaces with your choice
             local scriptURL = "https://raw.githubusercontent.com/Any1Cake/Roblox/main/Scripts/Games/" .. formattedGameName .. ".lua"
@@ -28,7 +29,7 @@ for placeId, gameName in pairs(games) do
                 Title = "Game Found!",
                 Text = "Executing " .. gameName .. " Script",
                 Icon = "rbxassetid://10885644072",
-                Duration = 1.5,
+                Duration = 2.5,
             })
             loadstring(game:HttpGet(scriptURL, true))()
         else
@@ -36,7 +37,7 @@ for placeId, gameName in pairs(games) do
                 Title = "Game Already Executed!",
                 Text = "The game script has already been executed.",
                 Icon = "rbxassetid://10885644072",
-                Duration = 1.5,
+                Duration = 2.5,
             })
         end
     end
@@ -47,6 +48,6 @@ if not isGameFound then
         Title = "Game Not Found!",
         Text = "The game you are playing is not in the list.",
         Icon = "rbxassetid://10885644072",
-        Duration = 1.5,
+        Duration = 2.5,
     })
 end
