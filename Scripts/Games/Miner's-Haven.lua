@@ -46,7 +46,7 @@ local function autoLoad()
 end
 
 -- Enable Rebirth Farming
-local reFarm = mainW:Toggle('Rebirth Farm', {flag = "rebfarm"}, function()
+local reFarm = mainW:Toggle('Auto Layouts', {flag = "rebfarm"}, function()
     if mainW.flags.rebfarm then
         loadLayouts()
         farmRebirth()
