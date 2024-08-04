@@ -118,30 +118,7 @@ for i=1,#old do
 end
 
 -- Auto Tp to Boxes
--- Credits to https://forum.wearedevs.net/profile?uid=53396 for the script 
-local function autoTpToBoxes()
-    while mainW.flags.BoxTp do
-        local plr = game:GetService("Players").LocalPlayer
-        local char = plr.Character
-        local bxs = game:GetService("Workspace").Boxes
-        local i = 1
-
-        if #bxs:GetChildren() == 0 then
-            plr.Character.HumanoidRootPart.CFrame = lastPos
-        else
-            local v = bxs:GetChildren()[i]
-            char:MoveTo(v.Position)
-            wait(0.75)
-            i = i % #bxs:GetChildren() + 1
-        end
-        wait() -- Add a small delay to prevent high CPU usage
-    end
-end
-
-local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp",}, function()
-    if mainW.flags.BoxTp then
-        autoTpToBoxes()
-    end
+local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp"}, function()
 end)
 
 -- Auto Open Box Function
@@ -189,12 +166,15 @@ end)
 -- Misc Section
 local SectionNPC = mainW:Section('Misc', true)
 
-local AutoKick = mainW:Toggle('Auto Leave', {flag = "DisBoxTp",}, function()
-    while mainW.flags.DisBoxTp do
-        if #game.Players:GetChildren() > 1 then
-            game.Players.LocalPlayer:Kick("Someone Joined")
+local AutoKick = mainW:Toggle('Auto Leave', {flag = "Kick"}, function() 
+end)
+
+local TpToBase = mainW:Button('Tp To Base', function()
+    for _, v in pairs(workspace.Tycoons:GetDescendants()) do
+        if string.match(v.Name, 'Factory%d') and v.Owner.Value == LocalPlayer.Name then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame * CFrame.new(0, 5, 0)
+            break
         end
-        wait(1) -- Add a delay to avoid excessive checks
     end
 end)
 
@@ -279,3 +259,34 @@ function teleportToNPC()
         warn("NPC not found in locations table!")
     end
 end
+
+spawn(function()
+    lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
+    stoptp = true
+    while true do
+        local char = LocalPlayer.Character
+        local bxs = workspace.Boxes
+        
+
+        if mainW.flags.BoxTp and #bxs:GetChildren() >= 1 then
+            for _, v in ipairs(bxs:GetChildren()) do
+                char:MoveTo(v.Position)
+                wait(0.75)
+                stoptp = false
+            end
+        elseif #bxs:GetChildren() == 0 then 
+            if not stoptp then 
+                char.HumanoidRootPart.CFrame = lastPos
+                stoptp = true
+            else
+                lastPos = char.HumanoidRootPart.CFrame
+            end
+        end
+
+        if mainW.flags.Kick and #Players:GetPlayers() > 1 then
+            LocalPlayer:Kick("Someone Joined")
+        end
+
+        wait(0.5)
+    end
+end)
