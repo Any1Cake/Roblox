@@ -2,12 +2,10 @@
 
 Most of this script ara not mine
 
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+## Use Loadstring
 
 ```bash
-pip install foobar
+loadstring(game.Https
 ```
 
 ## Usage
