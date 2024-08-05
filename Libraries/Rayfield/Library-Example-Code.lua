@@ -51,6 +51,22 @@ Section:Set("Section Example")
 -- Destroying the Interface
 Rayfield:Destroy()
 
+--Notifying the user
+Rayfield:Notify({
+   Title = "Notification Title",
+   Content = "Notification Content",
+   Duration = 6.5,
+   Image = 4483362458,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "Okay!",
+         Callback = function()
+         print("The user tapped Okay!")
+      end
+   },
+},
+})
+
 -- Creating a Button
 local Button = Tab:CreateButton({
    Name = "Button Example",
