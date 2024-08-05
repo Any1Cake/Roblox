@@ -255,8 +255,6 @@ function teleportToNPC()
     if npcLocations[npcname] then
         local location = npcLocations[npcname]() * CFrame.new(0, 5, 0)
         plr.CFrame = location
-    else
-        warn("NPC not found in locations table!")
     end
 end
 
