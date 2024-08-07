@@ -1,6 +1,6 @@
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Rayfield/Library-Code.lua', true))()
 
-local SaveExecution = true 
+local SaveExecution = false 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local isGameExecutedValue = ReplicatedStorage:FindFirstChild("IsGameExecuted")
@@ -45,7 +45,7 @@ for placeId, gameName in pairs(games) do
 
             
             local vu = game:GetService("VirtualUser")
-                Players.LocalPlayer.Idled:connect(function()
+                game:GetService("Players").LocalPlayer.Idled:connect(function()
                 vu:Button2Down(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
                 task.wait(1)
                 vu:Button2Up(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)

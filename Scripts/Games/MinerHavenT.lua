@@ -28,9 +28,9 @@ local Window = Rayfield:CreateWindow({
 })
 
 local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local Value = LocalPlayer.Rebirths
 
