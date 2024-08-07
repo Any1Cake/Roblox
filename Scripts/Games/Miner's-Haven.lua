@@ -109,14 +109,6 @@ Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 -- Box Section
 local SectionBox = mainW:Section('Boxes', true)
 
--- Get the location of player
-local old = game.Players.LocalPlayer.Character:getChildren()
-for i=1,#old do  
-    if old[i].Name == "HumanoidRootPart" then 
-        lastPos = old[i].CFrame 
-    end
-end
-
 -- Auto Tp to Boxes
 local TptoBoxes = mainW:Toggle('Auto Tp to Boxes', {flag = "BoxTp"}, function()
 end)
@@ -204,7 +196,7 @@ mainW:Dropdown("Teleport To", {
 end)
 
 function teleportToNPC()
-    local plr = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local plr = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not plr then
         warn("HumanoidRootPart not found in character!")
         return
@@ -213,43 +205,30 @@ function teleportToNPC()
     local map = game.Workspace.Map
     local npcname = getgenv().NpcName
     local npcLocations = {
-        ["Masked Man"] = function()
-            return game.Workspace.Market.UpperTorso.CFrame 
-        end,
-        ["Fargield"] = function() 
-            return map.Fargield.UpperTorso.CFrame 
-        end,
-        ["JohnDoe"] = function() 
-            return map.JohnDoe.Model.UpperTorso.CFrame 
-        end,
-        ["Fleabag"] = function() 
-            return map.Fleabag.Fleabag.UpperTorso.CFrame 
-        end,
+        ["Masked Man"] = function() return game.Workspace.Market.UpperTorso.CFrame end,
+        ["Fargield"] = function() return map.Fargield.UpperTorso.CFrame end,
+        ["JohnDoe"] = function() return map.JohnDoe.Model.UpperTorso.CFrame end,
+        ["Fleabag"] = function() return map.Fleabag.Fleabag.UpperTorso.CFrame end,
         ["Spook's McDooks"] = function()
             plr.CFrame = map.TeleporterModel:GetChildren()[6].CFrame
             wait(0.5)
-            return map.SpookMcDook.Model.UpperTorso.CFrame 
-        end,
+            return map.SpookMcDook.Model.UpperTorso.CFrame end,
         ["Craftsman"] = function() 
             plr.CFrame = map.TeleporterModel:GetChildren()[1].CFrame
             wait(0.5)
-            return map.WizardDude.HumanoidModel:GetChildren()[2].UpperTorso.CFrame 
-        end,
+            return map.WizardDude.HumanoidModel:GetChildren()[2].UpperTorso.CFrame end,
         ["Draedon"] = function() 
             plr.CFrame = map.TeleporterModel:GetChildren()[2].CFrame
             wait(0.5)
-            return map.Draedon.Model.UpperTorso.CFrame 
-        end,
+            return map.Draedon.Model.UpperTorso.CFrame end,
         ["Zalgo"] = function() 
             plr.CFrame = map.TeleporterModel:GetChildren()[7].CFrame
-            wait(0.5)
-            return map.Zalgo.UpperTorso.CFrame 
-        end,
+            wait(0.5) 
+            return map.Zalgo.UpperTorso.CFrame end,
         ["Data Reset"] = function() 
             plr.CFrame = map.TeleporterModel:GetChildren()[7].CFrame
             wait(0.5)
-            return map.DataResetModel.Model.Model.UpperTorso.CFrame 
-        end,
+            return map.DataResetModel.Model.Model.UpperTorso.CFrame end,
     }
 
     if npcLocations[npcname] then
@@ -258,14 +237,14 @@ function teleportToNPC()
     end
 end
 
+
 spawn(function()
-    lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
-    stoptp = true
+    local lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
+    local stoptp = true
     while true do
         local char = LocalPlayer.Character
         local bxs = workspace.Boxes
         
-
         if mainW.flags.BoxTp and #bxs:GetChildren() >= 1 then
             for _, v in ipairs(bxs:GetChildren()) do
                 char:MoveTo(v.Position)
@@ -284,7 +263,6 @@ spawn(function()
         if mainW.flags.Kick and #Players:GetPlayers() > 1 then
             LocalPlayer:Kick("Someone Joined")
         end
-
         wait(0.5)
     end
 end)

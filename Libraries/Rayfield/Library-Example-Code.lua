@@ -104,7 +104,7 @@ local ColorPicker = Tab:CreateColorPicker({
 })
 
 -- Updating a Color Picker
-ColorPicker:Set(Color3.fromRGB(255,255,255)
+ColorPicker:Set(Color3.fromRGB(255,255,255))
 
 -- Creating a Slider
 local Slider = Tab:CreateSlider({

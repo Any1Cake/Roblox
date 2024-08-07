@@ -6,7 +6,7 @@ local Window = Rayfield:CreateWindow({
     LoadingTitle = "Loading Script",
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
-       Enabled =true,
+       Enabled = true,
        FolderName = nil, -- Create a custom folder for your hub/game
        FileName = "Big Hub"
     },
@@ -27,29 +27,36 @@ local Window = Rayfield:CreateWindow({
     }
 })
 
-local MainTab = Window:CreateTab("Main", nil) -- Title, Image
-local MainSection = MainTab:CreateSection("Rebirth Farm")
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local Value = LocalPlayer.Rebirths
 
-function loadLayouts()
+local MainTab = Window:CreateTab("Main", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("Rebirth")
+
+local function loadLayouts()
     task.spawn(function()
-        game:GetService("ReplicatedStorage").Layouts:InvokeServer("Load", getgenv().layoutone)
+        ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.layoutone)
         task.wait(getgenv().duration)
         if MainTab.flags.autolayout2 then
-            game:GetService("ReplicatedStorage").Layouts:InvokeServer("Load", getgenv().layouttwo)
+            ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.layouttwo)
         end
     end)
 end
 
-function farmRebirth()
+local function AutoRebirth()
     task.spawn(function()
         while MainTab.flags.autoRebirth do
-            game:GetService("ReplicatedStorage").Rebirth:InvokeServer(26)
+            ReplicatedStorage.Rebirth:InvokeServer(26)
             task.wait()
         end
     end)
 end
 
-function autoLoad()
+local function autoLoad()
     task.spawn(function()
         task.wait(0.75)
         if MainTab.flags.autolayout1 then
@@ -72,15 +79,15 @@ local Toggle = MainTab:CreateToggle({
     Callback = function(Value)
         if Value then
             loadLayouts()
-            farmRebirth()
+            AutoRebirth()
         end
     end,
 })
 
 local Toggle = MainTab:CreateToggle({
-    Name = "Second Layout",
+    Name = "Enable Second Layout",
     CurrentValue = false,
-    Flag = "autolayout2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "autolayout2",
     Callback = function(Value)
     -- The function that takes place when the toggle is pressed
     -- The variable (Value) is a boolean on whether the toggle is true or false
@@ -90,10 +97,10 @@ local Toggle = MainTab:CreateToggle({
 local Toggle = MainTab:CreateToggle({
     Name = "Auto Rebirth",
     CurrentValue = false,
-    Flag = "autoRebirth", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "autoRebirth",
     Callback = function(Value)
         if Value then
-            farmRebirth()
+            AutoRebirth()
         end
     end,
 })
@@ -102,8 +109,8 @@ local Input = MainTab:CreateInput({
     Name = "Time Between Layouts",
     PlaceholderText = "Input Number",
     RemoveTextAfterFocusLost = false,
-    Callback = function(Text)
-        getgenv().duration = Text
+    Callback = function(Time)
+        getgenv().duration = Time
     end,
 })
 
@@ -112,7 +119,7 @@ local Dropdown = MainTab:CreateDropdown({
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
     MultipleOptions = false,
-    Flag = "layoutone", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "layoutone",
     Callback = function(Option)
     -- The function that takes place when the selected option is changed
     -- The variable (Option) is a table of strings for the current selected options
@@ -124,7 +131,7 @@ local Dropdown = MainTab:CreateDropdown({
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
     MultipleOptions = false,
-    Flag = "layouttwo", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "layouttwo",
     Callback = function(Option)
     -- The function that takes place when the selected option is changed
     -- The variable (Option) is a table of strings for the current selected options
@@ -133,5 +140,10 @@ local Dropdown = MainTab:CreateDropdown({
 
 -- Auto Load on Value change
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
+
+local SecTab = Window:CreateTab("Main", nil) -- Title, Image
+local MainSection = SecTab:CreateSection("Boxes")
+
+
 
 Rayfield:LoadConfiguration()
