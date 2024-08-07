@@ -1,6 +1,6 @@
 # !! WARNING!!
 
-Most of this script ara not mine
+Most of this script are not made by me
 
 ## Use Loadstring
 
