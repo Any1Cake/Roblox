@@ -1,5 +1,4 @@
-# !! WARNING!!
-
+# !! WARNING !!
 Most of this script are not made by me
 
 ## Use Loadstring
