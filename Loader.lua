@@ -1,7 +1,4 @@
 local SaveExecution = true 
-
-
-
 local replicatedStorage = game:GetService("ReplicatedStorage")
 local isGameExecutedValue = replicatedStorage:FindFirstChild("IsGameExecuted")
 if not isGameExecutedValue then
