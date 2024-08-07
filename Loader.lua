@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1
 local SaveExecution = true 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
-local isGameExecutedValue = replicatedStorage:FindFirstChild("IsGameExecuted")
+local isGameExecutedValue = ReplicatedStorage:FindFirstChild("IsGameExecuted")
 if not isGameExecutedValue then
     isGameExecutedValue = Instance.new("BoolValue")
     isGameExecutedValue.Name = "IsGameExecuted"
