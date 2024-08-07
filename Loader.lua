@@ -1,13 +1,10 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Rayfield/Library-Code.lua', true))()
-
-local SaveExecution = false 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Workspace = game:GetService("Workspace")
-local isGameExecutedValue = ReplicatedStorage:FindFirstChild("IsGameExecuted")
+local SaveExecution = true 
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local isGameExecutedValue = replicatedStorage:FindFirstChild("IsGameExecuted")
 if not isGameExecutedValue then
     isGameExecutedValue = Instance.new("BoolValue")
     isGameExecutedValue.Name = "IsGameExecuted"
-    isGameExecutedValue.Parent = ReplicatedStorage
+    isGameExecutedValue.Parent = replicatedStorage
 end
 
 local games = {
@@ -27,61 +24,39 @@ for placeId, gameName in pairs(games) do
             local formattedGameName = gameName:gsub("%s+", "-") -- Replace spaces with your choice
             local scriptURL = "https://raw.githubusercontent.com/Any1Cake/Roblox/main/Scripts/Games/" .. formattedGameName .. ".lua"
             
-            Rayfield:Notify({
-                Title = "Script Found!",
-                Content = "Executing " .. gameName .. " Script",
-                Duration = 6.5,
-                Image = 4483362458,
-                Actions = { -- Notification Buttons
-                   Ignore = {
-                      Name = "Okay!",
-                      Callback = function()
-                   end
-                },
-             },
-             })
+            CoreGui:SetCore("SendNotification", {
+                Title = "Game Found!",
+                Text = "Executing " .. gameName .. " Script",
+                Icon = "rbxassetid://10885644072",
+                Duration = 2.5,
+            })
             
             loadstring(game:HttpGet(scriptURL, true))()
 
             
             local vu = game:GetService("VirtualUser")
-                game:GetService("Players").LocalPlayer.Idled:connect(function()
-                vu:Button2Down(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
+                Players.LocalPlayer.Idled:connect(function()
+                vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
                 task.wait(1)
-                vu:Button2Up(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
+                vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
             end)
             
         else
-            Rayfield:Notify({
-                Title = "Script Already Executed!",
-                Content = "The game script has already been executed.",
-                Duration = 6.5,
-                Image = 4483362458,
-                Actions = { -- Notification Buttons
-                   Ignore = {
-                      Name = "Okay!",
-                      Callback = function()
-                   end
-                },
-             },
-             })
+            CoreGui:SetCore("SendNotification", {
+                Title = "Game Already Executed!",
+                Text = "The game script has already been executed.",
+                Icon = "rbxassetid://10885644072",
+                Duration = 2.5,
+            })
         end
     end
 end
 
 if not isGameFound then
-    Rayfield:Notify({
-        Title = "Script Not Found!",
-        Content = "The game you are playing is not in the list.",
-        Duration = 6.5,
-        Image = 4483362458,
-        Actions = { -- Notification Buttons
-           Ignore = {
-              Name = "Okay!",
-              Callback = function()
-           end
-        },
-     },
-     })
+    CoreGui:SetCore("SendNotification", {
+        Title = "Game Not Found!",
+        Text = "The game you are playing is not in the list.",
+        Icon = "rbxassetid://10885644072",
+        Duration = 2.5,
+    })
 end
-
