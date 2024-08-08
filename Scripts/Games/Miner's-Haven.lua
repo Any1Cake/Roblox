@@ -3,7 +3,7 @@ local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local Value = LocalPlayer.Rebirths
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Wally-V2-Remastered/Library-Code.lua", true))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Wally-UI-Library-V2-Remastered/Library-Code.lua", true))()
 library.options.underlinecolor = 'rainbow'
 library.options.toggledisplay = 'Fill'
 local mainW = library:CreateWindow("Miner's Haven")
