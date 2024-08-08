@@ -1,4 +1,3 @@
-
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Rayfield/Library-Code.lua', true))()
 
 local Window = Rayfield:CreateWindow({
@@ -7,23 +6,23 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = nil, -- Create a custom folder for your hub/game
+       FolderName = nil,
        FileName = "Big Hub"
     },
     Discord = {
        Enabled = false,
-       Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+       Invite = "noinvitelink",
+       RememberJoins = true
     },
-    KeySystem = true, -- Set this to true to use our key system
+    KeySystem = true,
     KeySettings = {
        Title = "Miner's Haven",
        Subtitle = "Key System",
        Note = "No method of obtaining the key is provided",
-       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+       FileName = "Key",
+       SaveKey = true,
+       GrabKeyFromSite = false,
+       Key = {"Hello"}
     }
 })
 
@@ -34,15 +33,16 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mouse = LocalPlayer:GetMouse()
 local Value = LocalPlayer.Rebirths
 
-local MainTab = Window:CreateTab("Main", nil) -- Title, Image
+local MainTab = Window:CreateTab("Main", nil)
+MainTab.flags = {} -- Initialize the flags table
 local MainSection = MainTab:CreateSection("Rebirth")
 
 local function loadLayouts()
     task.spawn(function()
-        ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.layoutone)
+        ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.flags.layoutone)
         task.wait(getgenv().duration)
         if MainTab.flags.autolayout2 then
-            ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.layouttwo)
+            ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.flags.layouttwo)
         end
     end)
 end
@@ -72,7 +72,18 @@ local Button = MainTab:CreateButton({
     end,
 })
 
-local Toggle = MainTab:CreateToggle({
+local ToggleAutoRebirth = MainTab:CreateToggle({
+    Name = "Auto Rebirth",
+    CurrentValue = false,
+    Flag = "autoRebirth",
+    Callback = function(Value)
+        if Value then
+            AutoRebirth()
+        end
+    end,
+})
+
+local ToggleAutoLayouts = MainTab:CreateToggle({
     Name = "Auto Layouts",
     CurrentValue = false,
     Flag = "autolayout1",
@@ -84,24 +95,13 @@ local Toggle = MainTab:CreateToggle({
     end,
 })
 
-local Toggle = MainTab:CreateToggle({
+local ToggleSecondLayout = MainTab:CreateToggle({
     Name = "Enable Second Layout",
     CurrentValue = false,
     Flag = "autolayout2",
     Callback = function(Value)
-    -- The function that takes place when the toggle is pressed
-    -- The variable (Value) is a boolean on whether the toggle is true or false
-    end,
-})
-
-local Toggle = MainTab:CreateToggle({
-    Name = "Auto Rebirth",
-    CurrentValue = false,
-    Flag = "autoRebirth",
-    Callback = function(Value)
-        if Value then
-            AutoRebirth()
-        end
+        -- The function that takes place when the toggle is pressed
+        -- The variable (Value) is a boolean on whether the toggle is true or false
     end,
 })
 
@@ -114,36 +114,29 @@ local Input = MainTab:CreateInput({
     end,
 })
 
-local Dropdown = MainTab:CreateDropdown({
+local DropdownFirstLayout = MainTab:CreateDropdown({
     Name = "First Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
     MultipleOptions = false,
     Flag = "layoutone",
     Callback = function(Option)
-    -- The function that takes place when the selected option is changed
-    -- The variable (Option) is a table of strings for the current selected options
+        MainTab.flags.layoutone = Option
     end,
 })
 
-local Dropdown = MainTab:CreateDropdown({
+local DropdownSecondLayout = MainTab:CreateDropdown({
     Name = "Second Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = {"Layout1"},
     MultipleOptions = false,
     Flag = "layouttwo",
     Callback = function(Option)
-    -- The function that takes place when the selected option is changed
-    -- The variable (Option) is a table of strings for the current selected options
+        MainTab.flags.layouttwo = Option
     end,
 })
 
--- Auto Load on Value change
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 
-local SecTab = Window:CreateTab("Main", nil) -- Title, Image
+local SecTab = Window:CreateTab("Main", nil)
 local MainSection = SecTab:CreateSection("Boxes")
-
-
-
-Rayfield:LoadConfiguration()
