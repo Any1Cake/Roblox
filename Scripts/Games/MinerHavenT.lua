@@ -346,7 +346,7 @@ local ToggleAutoKick = Tab3:CreateToggle({
     end,
 })
 
-local Button = Tab1:CreateButton({
+local Button = Tab3:CreateButton({
     Name = "Destroy UI",
     Callback = function()
         Rayfield:Destroy()
