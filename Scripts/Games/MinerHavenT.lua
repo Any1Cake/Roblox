@@ -41,12 +41,6 @@ LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-if getgenv().NpcName == nil then
-    getgenv().NpcName = "Masked Man"
-elseif getgenv().TargetBox == nil then
-    getgenv().TargetBox = "Open All Boxes"
-end
-
 local Tab1 = Window:CreateTab("Main", nil) Tab1.flags = {}
 local MainSection = Tab1:CreateSection("Rebirth")
 
@@ -210,6 +204,10 @@ local DropdownBox = Tab2:CreateDropdown({
     end,
 })
 
+if getgenv().TargetBox == nil then
+    getgenv().TargetBox = "Open All Boxes"
+end
+
 spawn(function()
     local lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
     local stoptp = true
@@ -292,7 +290,7 @@ end
 local ButtonTpBase = Tab3:CreateButton({
     Name = "Teleport To Base",
     Callback = function()
-        for _, v in pairs(workspace.Tycoons:GetDescendants()) do
+        for _, v in pairs(WorkSpace.Tycoons:GetDescendants()) do
             if string.match(v.Name, 'Factory%d') and v.Owner.Value == LocalPlayer.Name then
                 LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame * CFrame.new(0, 5, 0)
             end
@@ -329,6 +327,10 @@ local ButtonTpNpc = Tab3:CreateButton({
         getgenv().NpcName = Option[1]
     end,
 })
+
+if getgenv().NpcName == nil then
+    getgenv().NpcName = "Masked Man"
+end
 
 local Section31 = Tab3:CreateSection("Random")
 
