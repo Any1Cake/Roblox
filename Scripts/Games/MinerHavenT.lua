@@ -29,10 +29,17 @@ local Window = Rayfield:CreateWindow({
 local Players = game:GetService("Players")
 local WorkSpace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local VirtualUser = game:GetService("VirtualUser")
 
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local Value = LocalPlayer.Rebirths
+
+LocalPlayer.Idled:connect(function()
+    VirtualUser:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 
 if getgenv().NpcName == nil then
     getgenv().NpcName = "Masked Man"
@@ -70,13 +77,6 @@ local function autoLoad()
         end
     end)
 end
-
-local Button = Tab1:CreateButton({
-    Name = "Destroy UI",
-    Callback = function()
-        Rayfield:Destroy()
-    end,
-})
 
 local ToggleAutoRebirth = Tab1:CreateToggle({
     Name = "Auto Rebirth",
@@ -233,7 +233,7 @@ spawn(function()
     end
 end)
 
-local Tab3 = Window:CreateTab("Teleport", nil) Tab3.flags = {}
+local Tab3 = Window:CreateTab("Misc", nil) Tab3.flags = {}
 local Section3 = Tab3:CreateSection("Npc")
 
 local function teleportToNPC()
@@ -289,18 +289,6 @@ local function KickPlayer()
     end)
 end
 
-local ToggleAutoKick = Tab3:CreateToggle({
-    Name = "Auto Kick",
-    CurrentValue = false,
-    Flag = "autoKick",
-    Callback = function(Value)
-        Tab3.flags.autoKick = Value
-        if Value then
-            KickPlayer()
-        end
-    end,
-})
-
 local ButtonTpBase = Tab3:CreateButton({
     Name = "Teleport To Base",
     Callback = function()
@@ -339,6 +327,27 @@ local ButtonTpNpc = Tab3:CreateButton({
     Flag = "NpcName",
     Callback = function(Option)
         getgenv().NpcName = Option[1]
+    end,
+})
+
+local Section31 = Tab3:CreateSection("Random")
+
+local ToggleAutoKick = Tab3:CreateToggle({
+    Name = "Auto Kick",
+    CurrentValue = false,
+    Flag = "autoKick",
+    Callback = function(Value)
+        Tab3.flags.autoKick = Value
+        if Value then
+            KickPlayer()
+        end
+    end,
+})
+
+local Button = Tab1:CreateButton({
+    Name = "Destroy UI",
+    Callback = function()
+        Rayfield:Destroy()
     end,
 })
 
