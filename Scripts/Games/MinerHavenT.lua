@@ -147,9 +147,13 @@ local MainSection = Tab2:CreateSection("Boxes")
 
 local function BoxOpener()
     task.spawn(function()
-        while mainW.flags.OpenBox do
-            game.ReplicatedStorage.MysteryBox:InvokeServer(getgenv().TargetBox)
-            wait() -- Wait before opening the box again
+        while Tab2.flags.autoOpenBox do
+            if getgenv().TargetBox == "Open All Boxes" then
+                -- some functions
+            else
+                ReplicatedStorage.MysteryBox:InvokeServer(getgenv().TargetBox)
+                wait() -- Wait before opening the box again
+            end
         end
     end)
 end
@@ -168,9 +172,175 @@ local ToggleAutoOpenBox = Tab2:CreateToggle({
     CurrentValue = false,
     Flag = "autoOpenBox",
     Callback = function(Value)
-        Tab2.flags.autoTpBox = Value
+        Tab2.flags.autoOpenBox = Value
         if Value then
             BoxOpener()
         end
     end,
 })
+
+local DropdownBox = Tab2:CreateDropdown({
+    Name = "Select Box",
+    Options = {
+                "Open All Boxes",
+                "Regular",
+                "Unreal",
+                "Inferno",
+                "Cake Raffle",
+                "Pumkin",
+                "Luxury",
+                "Red-Banded",
+                "Spectral",
+                "Heavenly",
+                "Magnificent",
+                "Festive",
+                "Easter",
+                "Birthday",
+                "Twitch",
+            },
+    CurrentOption = "Regular", -- Single string since MultipleOptions is false
+    MultipleOptions = false,
+    Flag = "TargetBox",
+    Callback = function(Option)
+        getgenv().TargetBox = Option[1]
+    end,
+})
+
+spawn(function()
+    local lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
+    local stoptp = true
+    while true do
+        local char = LocalPlayer.Character
+        local bxs = WorkSpace.Boxes
+        
+        if Tab2.flags.autoTpBox and #bxs:GetChildren() >= 1 then
+            for _, v in ipairs(bxs:GetChildren()) do
+                char:MoveTo(v.Position)
+                wait(0.75)
+                stoptp = false
+            end
+        elseif #bxs:GetChildren() == 0 and not stoptp then 
+            char.HumanoidRootPart.CFrame = lastPos
+                stoptp = true        
+        else
+            lastPos = char.HumanoidRootPart.CFrame            
+        end
+        task.wait(1)
+    end
+end)
+
+local Tab3 = Window:CreateTab("Teleport", nil)
+local MainSection = Tab3:CreateSection("Npc")
+
+local function teleportToNPC()
+    local plr = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not plr then
+        warn("HumanoidRootPart not found in character!")
+        return
+    end
+
+    local Map = WorkSpace.Map
+    local npcName = getgenv().NpcName
+    local npcLocations = {
+        ["Masked Man"] = function() return game.Workspace.Market.UpperTorso.CFrame end,
+        ["Fargield"] = function() return Map.Fargield.UpperTorso.CFrame end,
+        ["JohnDoe"] = function() return Map.JohnDoe.Model.UpperTorso.CFrame end,
+        ["Fleabag"] = function() return Map.Fleabag.Fleabag.UpperTorso.CFrame end,
+        ["Spook's McDooks"] = function()
+            plr.CFrame = Map.TeleporterModel:GetChildren()[6].CFrame
+            wait(0.5)
+            return Map.SpookMcDook.Model.UpperTorso.CFrame end,
+        ["Craftsman"] = function() 
+            plr.CFrame = Map.TeleporterModel:GetChildren()[1].CFrame
+            wait(0.5)
+            return Map.WizardDude.HumanoidModel:GetChildren()[2].UpperTorso.CFrame end,
+        ["Draedon"] = function() 
+            plr.CFrame = Map.TeleporterModel:GetChildren()[2].CFrame
+            wait(0.5)
+            return Map.Draedon.Model.UpperTorso.CFrame end,
+        ["Zalgo"] = function() 
+            plr.CFrame = Map.TeleporterModel:GetChildren()[7].CFrame
+            wait(0.5) 
+            return Map.Zalgo.UpperTorso.CFrame end,
+        ["Data Reset"] = function() 
+            plr.CFrame = Map.TeleporterModel:GetChildren()[7].CFrame
+            wait(0.5)
+            return Map.DataResetModel.Model.Model.UpperTorso.CFrame end,
+    }
+
+    if npcLocations[npcName] then
+        local location = npcLocations[npcName]() * CFrame.new(0, 5, 0)
+        plr.CFrame = location
+    end
+end
+
+local function KickPlayer()
+    task.spawn(function ()
+        while true do
+            if#Players:GetPlayers() > 1 then
+                LocalPlayer:Kick("Someone Joined")
+            end
+            wait(0.5)
+        end
+    end)
+end
+
+local ToggleAutoKick = Tab3:CreateToggle({
+    Name = "Auto Kick",
+    CurrentValue = false,
+    Flag = "autoKick",
+    Callback = function(Value)
+        Tab3.flags.autoKick = Value
+        if Value then
+            KickPlayer()
+        end
+    end,
+})
+
+local ButtonTpBase = Tab3:CreateButton({
+    Name = "Teleport To Base",
+    Callback = function()
+        for _, v in pairs(workspace.Tycoons:GetDescendants()) do
+            if string.match(v.Name, 'Factory%d') and v.Owner.Value == LocalPlayer.Name then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame * CFrame.new(0, 5, 0)
+            end
+        end
+    end,
+})
+
+local ButtonTpNpc = Tab3:CreateButton({
+    Name = "Teleport To",
+    Callback = function()
+        if getgenv().NpcName then 
+            teleportToNPC()
+        end
+    end,
+})
+
+ local DropdownNpc = Tab3:CreateDropdown({
+    Name = "Select Npc",
+    Options = {
+                "Masked Man",
+                "Spook's McDooks",
+                "Craftsman",
+                "Draedon",
+                "Fargield",
+                "JohnDoe",
+                "Fleabag",
+                "Zalgo",
+                "Data Reset",
+            },
+    CurrentOption = "Masked Man",
+    MultipleOptions = false,
+    Flag = "NpcName",
+    Callback = function(Option)
+        getgenv().NpcName = Option[1]
+    end,
+})
+
+if getgenv().NpcName == nil then
+    getgenv().NpcName = "Masked Man"
+end
+
+
+Rayfield:LoadConfiguration()
