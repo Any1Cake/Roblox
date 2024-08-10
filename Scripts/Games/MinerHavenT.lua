@@ -34,8 +34,13 @@ local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local Value = LocalPlayer.Rebirths
 
-local Tab1 = Window:CreateTab("Main", nil)
-Tab1.flags = {} -- Initialize the flags table
+if getgenv().NpcName == nil then
+    getgenv().NpcName = "Masked Man"
+elseif getgenv().TargetBox == nil then
+    getgenv().TargetBox = "Open All Boxes"
+end
+
+local Tab1 = Window:CreateTab("Main", nil) Tab1.flags = {}
 local MainSection = Tab1:CreateSection("Rebirth")
 
 local function loadLayouts()
@@ -119,7 +124,7 @@ local TimeInput = Tab1:CreateInput({
 local DropdownFirstLayout = Tab1:CreateDropdown({
     Name = "First Layout",
     Options = {"Layout1","Layout2","Layout3"},
-    CurrentOption = "Layout1", -- Single string since MultipleOptions is false
+    CurrentOption = "Layout1",
     MultipleOptions = false,
     Flag = "layoutone",
     Callback = function(Option)
@@ -131,7 +136,7 @@ local DropdownFirstLayout = Tab1:CreateDropdown({
 local DropdownSecondLayout = Tab1:CreateDropdown({
     Name = "Second Layout",
     Options = {"Layout1","Layout2","Layout3"},
-    CurrentOption = "Layout1", -- Single string since MultipleOptions is false
+    CurrentOption = "Layout1",
     MultipleOptions = false,
     Flag = "layouttwo",
     Callback = function(Option)
@@ -142,17 +147,27 @@ local DropdownSecondLayout = Tab1:CreateDropdown({
 
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 
-local Tab2 = Window:CreateTab("Boxes", nil)
-local MainSection = Tab2:CreateSection("Boxes")
+local Tab2 = Window:CreateTab("Boxes", nil) Tab2.flags = {}
+local Section2 = Tab2:CreateSection("Boxes")
 
 local function BoxOpener()
     task.spawn(function()
         while Tab2.flags.autoOpenBox do
             if getgenv().TargetBox == "Open All Boxes" then
-                -- some functions
+                
+                local boxList = {
+                                "Regular","Unreal","Inferno","Luxury","Red-Banded",
+                                "Spectral","Magnificent","Heavenly","Pumkin","Festive",
+                                "Easter","Birthday","Cake Raffle","Twitch",
+                            }
+                
+                for _, boxName in ipairs(boxList) do
+                    ReplicatedStorage.MysteryBox:InvokeServer(boxName)
+                    wait()
+                end
             else
                 ReplicatedStorage.MysteryBox:InvokeServer(getgenv().TargetBox)
-                wait() -- Wait before opening the box again
+                wait()
             end
         end
     end)
@@ -183,22 +198,11 @@ local DropdownBox = Tab2:CreateDropdown({
     Name = "Select Box",
     Options = {
                 "Open All Boxes",
-                "Regular",
-                "Unreal",
-                "Inferno",
-                "Cake Raffle",
-                "Pumkin",
-                "Luxury",
-                "Red-Banded",
-                "Spectral",
-                "Heavenly",
-                "Magnificent",
-                "Festive",
-                "Easter",
-                "Birthday",
-                "Twitch",
+                "Regular","Unreal","Inferno","Luxury","Red-Banded",
+                "Spectral","Magnificent","Heavenly","Pumkin","Festive",
+                "Easter","Birthday","Cake Raffle","Twitch",
             },
-    CurrentOption = "Regular", -- Single string since MultipleOptions is false
+    CurrentOption = "Regular",
     MultipleOptions = false,
     Flag = "TargetBox",
     Callback = function(Option)
@@ -229,8 +233,8 @@ spawn(function()
     end
 end)
 
-local Tab3 = Window:CreateTab("Teleport", nil)
-local MainSection = Tab3:CreateSection("Npc")
+local Tab3 = Window:CreateTab("Teleport", nil) Tab3.flags = {}
+local Section3 = Tab3:CreateSection("Npc")
 
 local function teleportToNPC()
     local plr = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -337,10 +341,5 @@ local ButtonTpNpc = Tab3:CreateButton({
         getgenv().NpcName = Option[1]
     end,
 })
-
-if getgenv().NpcName == nil then
-    getgenv().NpcName = "Masked Man"
-end
-
 
 Rayfield:LoadConfiguration()
