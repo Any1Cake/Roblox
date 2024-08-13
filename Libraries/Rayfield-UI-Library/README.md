@@ -65,14 +65,17 @@ local Window = Rayfield:CreateWindow({
 ```lua
 local Tab = Window:CreateTab("Tab Example", 4483362458) -- Title, Image
 ```
+
 ### Creating a Section
 ```lua
 local Section = Tab:CreateSection("Section Example")
 ```
+
 ### Updating a Section
 ```lua
 Section:Set("Section Example")
 ```
+
 ### Destroying the Interface
 ```lua
 Rayfield:Destroy()
@@ -107,6 +110,7 @@ local Button = Tab:CreateButton({
    end,
 })
 ```
+
 ### Updating a Button
 ```lua
 Button:Set("Button Example")
@@ -124,6 +128,111 @@ local Toggle = Tab:CreateToggle({
    end,
 })
 ```
+
+## Creating a Color Picker
+```lua
+local ColorPicker = Tab:CreateColorPicker({
+    Name = "Color Picker",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        -- The function that takes place every time the color picker is moved/changed
+        -- The variable (Value) is a Color3fromRGB value based on which color is selected
+    end
+})
+```
+
+### Updating a Color Picker
+```lua
+ColorPicker:Set(Color3.fromRGB(255,255,255))
+```
+
+## Creating a Slider
+```lua
+local Slider = Tab:CreateSlider({
+   Name = "Slider Example",
+   Range = {0, 100},
+   Increment = 10,
+   Suffix = "Bananas",
+   CurrentValue = 10,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   -- The function that takes place when the slider changes
+   -- The variable (Value) is a number which correlates to the value the slider is currently at
+   end,
+})
+```
+
+### Updating a Slider
+```lua
+Slider:Set(10) -- The new slider integer value
+```
+
+## Creating an Adaptive Input (TextBox)
+```lua
+local Input = Tab:CreateInput({
+   Name = "Input Example",
+   PlaceholderText = "Input Placeholder",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+   -- The function that takes place when the input is changed
+   -- The variable (Text) is a string for the value in the text box
+   end,
+})
+```
+
+## Creating a Dropdown menu
+```lua
+local Dropdown = Tab:CreateDropdown({
+   Name = "Dropdown Example",
+   Options = {"Option 1","Option 2"},
+   CurrentOption = {"Option 1"},
+   MultipleOptions = false,
+   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Option)
+   -- The function that takes place when the selected option is changed
+   -- The variable (Option) is a table of strings for the current selected options
+   end,
+})
+```
+
+### Updating a Dropdown
+```lua
+Dropdown:Set({"Option 2"}) -- The new list of options
+--[[Check the value of an existing element
+  To check the current value of an existing element, using the variable, you can do ElementName.CurrentValue, 
+  if it's a keybind or dropdown, you will need to use KeybindName.CurrentKeybind or DropdownName.CurrentOption You can also check it via the flags from Rayfield.Flags
+]]
+```
+
+-- Binding keys in Rayfield
+Creating a Keybind
+local Keybind = Tab:CreateKeybind({
+   Name = "Keybind Example",
+   CurrentKeybind = "Q",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+   -- The function that takes place when the keybind is pressed
+   -- The variable (Keybind) is a boolean for whether the keybind is being held or not (HoldToInteract needs to be true)
+   end,
+})
+
+-- Updating a Keybind
+Keybind:Set("RightCtrl") -- Keybind (string)
+
+--Textual elements in Rayfield
+-- Creating a Label
+local Label = Tab:CreateLabel("Label Example")
+
+-- Updating a Label
+Label:Set("Label Example")
+
+-- Creating a Paragraph
+local Paragraph = Tab:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
+
+-- Updating a Paragraph
+Paragraph:Set({Title = "Paragraph Example", Content = "Paragraph Example"})
 
 ### Updating a Toggle
 ```lua
