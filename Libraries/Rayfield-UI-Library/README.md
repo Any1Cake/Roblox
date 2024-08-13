@@ -1,4 +1,5 @@
-# Rayfield Interface Suite
+# 𝑅𝒶𝓎𝒻𝒾𝑒𝓁𝒹 𝐼𝓃𝓉𝑒𝓇𝒻𝒶𝒸𝑒 𝒮𝓊𝒾𝓉𝑒
+# Booting the Library
 ## Secure Mode
 
 ### ⚠️ WARNING
@@ -129,6 +130,11 @@ local Toggle = Tab:CreateToggle({
 })
 ```
 
+### Updating a Toggle
+```lua
+Toggle:Set(false)
+```
+
 ## Creating a Color Picker
 ```lua
 local ColorPicker = Tab:CreateColorPicker({
@@ -199,14 +205,15 @@ local Dropdown = Tab:CreateDropdown({
 ### Updating a Dropdown
 ```lua
 Dropdown:Set({"Option 2"}) -- The new list of options
---[[Check the value of an existing element
-  To check the current value of an existing element, using the variable, you can do ElementName.CurrentValue, 
-  if it's a keybind or dropdown, you will need to use KeybindName.CurrentKeybind or DropdownName.CurrentOption You can also check it via the flags from Rayfield.Flags
-]]
 ```
 
--- Binding keys in Rayfield
-Creating a Keybind
+## Check the value of an existing element
+To check the current value of an existing element, using the variable, you can do ElementName.CurrentValue, 
+if it's a keybind or dropdown, you will need to use KeybindName.CurrentKeybind or DropdownName.CurrentOption You can also check it via the flags from Rayfield.Flags
+
+# Binding keys in Rayfield
+## Creating a Keybind
+```lua
 local Keybind = Tab:CreateKeybind({
    Name = "Keybind Example",
    CurrentKeybind = "Q",
@@ -217,24 +224,30 @@ local Keybind = Tab:CreateKeybind({
    -- The variable (Keybind) is a boolean for whether the keybind is being held or not (HoldToInteract needs to be true)
    end,
 })
+```
 
--- Updating a Keybind
-Keybind:Set("RightCtrl") -- Keybind (string)
-
---Textual elements in Rayfield
--- Creating a Label
-local Label = Tab:CreateLabel("Label Example")
-
--- Updating a Label
-Label:Set("Label Example")
-
--- Creating a Paragraph
-local Paragraph = Tab:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
-
--- Updating a Paragraph
-Paragraph:Set({Title = "Paragraph Example", Content = "Paragraph Example"})
-
-### Updating a Toggle
+## Updating a Keybind
 ```lua
-Toggle:Set(false)
+Keybind:Set("RightCtrl") -- Keybind (string)
+```
+
+# Textual elements in Rayfield
+## Creating a Label
+```lua
+local Label = Tab:CreateLabel("Label Example")
+```
+
+## Updating a Label
+```lua
+Label:Set("Label Example")
+```
+
+## Creating a Paragraph
+```lua
+local Paragraph = Tab:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
+```
+
+## Updating a Paragraph
+```lua
+Paragraph:Set({Title = "Paragraph Example", Content = "Paragraph Example"})
 ```
