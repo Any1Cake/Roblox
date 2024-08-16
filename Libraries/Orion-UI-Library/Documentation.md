@@ -4,10 +4,7 @@ This documentation is for the stable release of Orion Library.
 ## Booting the Library
 ```lua
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Orion-UI-Library/source.lua', true))()
-
 ```
-
-
 
 ## Creating a Window
 ```lua
@@ -26,8 +23,6 @@ local Window = OrionLib:MakeWindow({
 })
 ```
 
-
-
 ## Creating a Tab
 ```lua
 local Tab1 = Window:MakeTab({
@@ -36,6 +31,7 @@ local Tab1 = Window:MakeTab({
 	PremiumOnly = false -- Makes the tab accessible to Sirus Premium users only.
 })
 ```
+
 ## Creating a Section
 ```lua
 local Section = Tab1:AddSection({
@@ -54,63 +50,45 @@ OrionLib:MakeNotification({
 })
 ```
 
-
-
 ## Creating a Button
 ```lua
-Tab:AddButton({
-	Name = "Button!",
-	Callback = function()
+local Button = Tab:AddButton({
+	Name = "Button!", -- The name of the button.
+	Callback = function() -- The function of the button.
       		print("button pressed")
-  	end    
+  	end
 })
-
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
 ```
-
 
 ## Creating a Checkbox toggle
 ```lua
-Tab:AddToggle({
-	Name = "This is a toggle!",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
+local Toggle = Tab:AddToggle({
+	Name = "This is a toggle!", -- The name of the toggle.
+	Default = false, -- The default value of the toggle.
+	Save = true, -- Set this to true if you want to save this element in config
+	Flag = "Toggle" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Callback = function(Value) 
+		print(Value) -- The function of the toggle.
 	end    
 })
-
---[[
-Name = <string> - The name of the toggle.
-Default = <bool> - The default value of the toggle.
-Callback = <function> - The function of the toggle.
-]]
 ```
 
 ### Changing the value of an existing Toggle
 ```lua
-CoolToggle:Set(true)
+Toggle:Set(true)
 ```
-
-
 
 ## Creating a Color Picker
 ```lua
-Tab:AddColorpicker({
-	Name = "Colorpicker",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		print(Value)
+local ColorPicker = Tab:AddColorpicker({
+	Name = "Colorpicker", -- The name of the colorpicker.
+	Default = Color3.fromRGB(255, 0, 0), -- The default value of the colorpicker.
+	Save = true, -- Set this to true if you want to save this element in config
+	Flag = "ColorPicker" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Callback = function(Value) 
+		print(Value) -- The function of the colorpicker.
 	end	  
 })
-
---[[
-Name = <string> - The name of the colorpicker.
-Default = <color3> - The default value of the colorpicker.
-Callback = <function> - The function of the colorpicker.
-]]
 ```
 
 ### Setting the color picker's value
@@ -118,124 +96,92 @@ Callback = <function> - The function of the colorpicker.
 ColorPicker:Set(Color3.fromRGB(255,255,255))
 ```
 
-
 ## Creating a Slider
 ```lua
-Tab:AddSlider({
-	Name = "Slider",
-	Min = 0,
-	Max = 20,
-	Default = 5,
+local Slider = Tab:AddSlider({
+	Name = "Slider", -- The name of the slider.
+	Min = 0, -- The minimal value of the slider.
+	Max = 20, -- The maxium value of the slider.
+	Default = 5, -- The default value of the slider.
+	Increment = 1, -- How much the slider will change value when dragging.
+	ValueName = "Slider" -- The text after the value number.
 	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "bananas",
+	Save = true, -- Set this to true if you want to save this element in config
+	Flag = "Slider" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value)
-		print(Value)
+		print(Value) -- The function of the slider.
 	end    
 })
-
---[[
-Name = <string> - The name of the slider.
-Min = <number> - The minimal value of the slider.
-Max = <number> - The maxium value of the slider.
-Increment = <number> - How much the slider will change value when dragging.
-Default = <number> - The default value of the slider.
-ValueName = <string> - The text after the value number.
-Callback = <function> - The function of the slider.
-]]
 ```
 
 ### Change Slider Value
 ```lua
 Slider:Set(2)
 ```
-Make sure you make your slider a variable (local CoolSlider = Tab:AddSlider...) for this to work.
-
 
 ## Creating a Label
 ```lua
-Tab:AddLabel("Label")
+local Label = Tab:AddLabel("Label")
 ```
 
 ### Changing the value of an existing label
 ```lua
-CoolLabel:Set("Label New!")
+Label:Set("Label New!")
 ```
-
 
 ## Creating a Paragraph
 ```lua
-Tab:AddParagraph("Paragraph","Paragraph Content")
+local Paragraph = Tab:AddParagraph("Paragraph","Paragraph Content")
 ```
 
-### Changing an existing paragraph
+### Changing an existing Paragraph
 ```lua
-CoolParagraph:Set("Paragraph New!", "New Paragraph Content!")
+Paragraph:Set("Paragraph New!", "New Paragraph Content!")
 ```
-
 
 ## Creating an Adaptive Input
 ```lua
-Tab:AddTextbox({
-	Name = "Textbox",
-	Default = "default box input",
-	TextDisappear = true,
+local TextBox = Tab:AddTextbox({
+	Name = "Textbox", -- The name of the textbox.
+	Default = 0, -- The default value of the textbox.
+	TextDisappear = false -- Makes the text disappear in the textbox after losing focus.
 	Callback = function(Value)
-		print(Value)
+		print(Value) -- The function of the textbox.
 	end	  
 })
-
---[[
-Name = <string> - The name of the textbox.
-Default = <string> - The default value of the textbox.
-TextDisappear = <bool> - Makes the text disappear in the textbox after losing focus.
-Callback = <function> - The function of the textbox.
-]]
 ```
-
 
 ## Creating a Keybind
 ```lua
-Tab:AddBind({
-	Name = "Bind",
-	Default = Enum.KeyCode.E,
-	Hold = false,
+local Bind = Tab:AddBind({
+	Name = "Bind", -- The name of the bind.
+	Default = Enum.KeyCode.E, -- The default value of the bind.
+	Hold = false, -- Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
+	Save = true, -- Set this to true if you want to save this element in config
+	Flag = "KeyBind" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function()
-		print("press")
+		print("press") -- The function of the bind.
 	end    
 })
-
---[[
-Name = <string> - The name of the bind.
-Default = <keycode> - The default value of the bind.
-Hold = <bool> - Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
-Callback = <function> - The function of the bind.
-]]
 ```
 
-### Chaning the value of a bind
+### Changing the value of a bind
 ```lua
 Bind:Set(Enum.KeyCode.E)
 ```
 
-
 ## Creating a Dropdown menu
 ```lua
-Tab:AddDropdown({
-	Name = "Dropdown",
-	Default = "1",
-	Options = {"1", "2"},
+local Dropdown = Tab:AddDropdown({
+	Name = "Dropdown", -- The name of the dropdown.
+	Default = "1", -- The default value of the dropdown.
+	Options = {"1", "2"}, -- The options in the dropdown.
+	Save = true, -- Set this to true if you want to save this element in config
+	Flag = "Dropdown" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value)
-		print(Value)
+		print(Value) -- The function of the dropdown.
 	end    
 })
-
---[[
-Name = <string> - The name of the dropdown.
-Default = <string> - The default value of the dropdown.
-Options = <table> - The options in the dropdown.
-Callback = <function> - The function of the dropdown.
-]]
 ```
 
 ### Adding a set of new Dropdown buttons to an existing menu
@@ -259,22 +205,24 @@ OrionLib:Init()
 The flags feature in the ui may be confusing for some people. It serves the purpose of being the ID of an element in the config file, and makes accessing the value of an element anywhere in the code possible.
 Below in an example of using flags.
 ```lua
-Tab1:AddToggle({
+local Toggle = Tab1:AddToggle({
     Name = "Toggle",
     Default = true,
     Save = true,
-    Flag = "toggle"
+    Flag = "Toggle"
 })
 
-print(OrionLib.Flags["toggle"].Value) -- prints the value of the toggle.
+print(OrionLib.Flags["Toggle"].Value) -- prints the value of the toggle.
 ```
 Flags only work with the toggle, slider, dropdown, bind, and colorpicker.
 
 ### Making your interface work with configs.
 In order to make your interface use the configs function you first need to add the `SaveConfig` and `ConfigFolder` arguments to your window function. The explanation of these arguments in above.
+
 Then you need to add the `Flag` and `Save` values to every toggle, slider, dropdown, bind, and colorpicker you want to include in the config file.
-The `Flag = <string>` argument is the ID of an element in the config file.
-The `Save = <bool>` argument includes the element in the config file.
+- The `Flag = <string>` argument is the ID of an element in the config file.
+- The `Save = <bool>` argument includes the element in the config file.
+
 Config files are made for every game the library is launched in.
 
 ## Destroying the Interface
