@@ -6,8 +6,8 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = "Any1cakeScripts",
-       FileName = "Miner's Haven"
+       FolderName = nil,
+       FileName = "Big Hub"
     },
     Discord = {
        Enabled = false,
@@ -27,7 +27,7 @@ local Window = Rayfield:CreateWindow({
 })
 
 local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
+local WorkSpace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local VirtualUser = game:GetService("VirtualUser")
 
@@ -35,29 +35,29 @@ local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
 LocalPlayer.Idled:connect(function()
-    VirtualUser:Button2Down(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
+    VirtualUser:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
     task.wait(1)
-    VirtualUser:Button2Up(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
+    VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-local Tab1 = Window:CreateTab("Main", nil)
+local Tab1 = Window:CreateTab("Main", nil) Tab1.flags = {}
 local MainSection = Tab1:CreateSection("Rebirth")
 
 local Value = LocalPlayer.Rebirths
 
 local function loadLayouts()
     task.spawn(function()
-        ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.Flags.layoutone)
+        ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.flags.layoutone)
         task.wait(getgenv().duration)
-        if Rayfield.Flags.autolayout2 then
-            ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.Flags.layouttwo)
+        if Rayfield.flags.autolayout2 then
+            ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.flags.layouttwo)
         end
     end)
 end
 
 local function AutoRebirth()
     task.spawn(function()
-        while Rayfield.Flags.autoRebirth do
+        while Rayfield.flags.autoRebirth do
             ReplicatedStorage.Rebirth:InvokeServer(26)
             task.wait()
         end
@@ -67,7 +67,7 @@ end
 local function autoLoad()
     task.spawn(function()
         task.wait(0.75)
-        if Rayfield.Flags.autolayout1 then
+        if Rayfield.flags.autolayout1 then
             loadLayouts()
         end
     end)
@@ -78,7 +78,8 @@ local ToggleAutoRebirth = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autoRebirth",
     Callback = function(Value)
-        if Rayfield.Flags.autoRebirth then
+        Rayfield.flags.autoRebirth = Value
+        if Value then
             AutoRebirth()
         end
     end,
@@ -89,7 +90,8 @@ local ToggleAutoLayouts = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autolayout1",
     Callback = function(Value)
-        if Rayfield.Flags.autolayout1 then
+        Rayfield.flags.autolayout1 = Value
+        if Value then
             loadLayouts()
             AutoRebirth()
         end
@@ -101,6 +103,7 @@ local ToggleSecondLayout = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autolayout2",
     Callback = function(Value)
+        Rayfield.flags.autolayout2 = Value
     end,
 })
 
@@ -120,6 +123,8 @@ local DropdownFirstLayout = Tab1:CreateDropdown({
     MultipleOptions = false,
     Flag = "layoutone",
     Callback = function(Option)
+        local selectedOption = Option[1]
+        Rayfield.flags.layoutone = selectedOption
     end,
 })
 
@@ -130,12 +135,14 @@ local DropdownSecondLayout = Tab1:CreateDropdown({
     MultipleOptions = false,
     Flag = "layouttwo",
     Callback = function(Option)
+        local selectedOption = Option[1]
+        Rayfield.flags.layouttwo = selectedOption
     end,
 })
 
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 
-local Tab2 = Window:CreateTab("Boxes", nil)
+local Tab2 = Window:CreateTab("Boxes", nil) Tab2.flags = {}
 local Section2 = Tab2:CreateSection("Boxes")
 
 local function BoxOpener()
@@ -195,12 +202,12 @@ local DropdownBox = Tab2:CreateDropdown({
     end,
 })
 
-task.spawn(function()
+spawn(function()
     local lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
     local stoptp = true
     while true do
         local char = LocalPlayer.Character
-        local bxs = Workspace.Boxes
+        local bxs = WorkSpace.Boxes
         
         if Rayfield.Flags.autoTpBox and #bxs:GetChildren() >= 1 then
             for _, v in ipairs(bxs:GetChildren()) do
@@ -218,20 +225,20 @@ task.spawn(function()
     end
 end)
 
-local Tab3 = Window:CreateTab("Misc", nil)
+local Tab3 = Window:CreateTab("Misc", nil) Tab3.flags = {}
 local Section3 = Tab3:CreateSection("Npc")
 
 local function teleportToNPC()
     local plr = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not plr then
-        error("HumanoidRootPart not found in character!")
+        warn("HumanoidRootPart not found in character!")
         return
     end
 
     local Map = Workspace.Map
-    local npcName = Rayfield.Flags.NpcName
+    local npcName = getgenv().NpcName
     local npcLocations = {
-        ["Masked Man"] = function() return Workspace.Market.UpperTorso.CFrame end,
+        ["Masked Man"] = function() return game.Workspace.Market.UpperTorso.CFrame end,
         ["Fargield"] = function() return Map.Fargield.UpperTorso.CFrame end,
         ["JohnDoe"] = function() return Map.JohnDoe.Model.UpperTorso.CFrame end,
         ["Fleabag"] = function() return Map.Fleabag.Fleabag.UpperTorso.CFrame end,
@@ -277,7 +284,7 @@ end
 local ButtonTpBase = Tab3:CreateButton({
     Name = "Teleport To Base",
     Callback = function()
-        for _, v in pairs(Workspace.Tycoons:GetDescendants()) do
+        for _, v in pairs(WorkSpace.Tycoons:GetDescendants()) do
             if string.match(v.Name, 'Factory%d') and v.Owner.Value == LocalPlayer.Name then
                 LocalPlayer.Character.HumanoidRootPart.CFrame = v.Base.CFrame * CFrame.new(0, 5, 0)
             end
