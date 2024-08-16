@@ -33,7 +33,6 @@ local VirtualUser = game:GetService("VirtualUser")
 
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
-local Value = LocalPlayer.Rebirths
 
 LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Down(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
@@ -44,19 +43,21 @@ end)
 local Tab1 = Window:CreateTab("Main", nil)
 local MainSection = Tab1:CreateSection("Rebirth")
 
+local Value = LocalPlayer.Rebirths
+
 local function loadLayouts()
     task.spawn(function()
-        ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.flags.layoutone)
+        ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.Flags.layoutone)
         task.wait(getgenv().duration)
-        if Rayfield.flags.autolayout2 then
-            ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.flags.layouttwo)
+        if Rayfield.Flags.autolayout2 then
+            ReplicatedStorage.Layouts:InvokeServer("Load", Rayfield.Flags.layouttwo)
         end
     end)
 end
 
 local function AutoRebirth()
     task.spawn(function()
-        while Rayfield.flags.autoRebirth do
+        while Rayfield.Flags.autoRebirth do
             ReplicatedStorage.Rebirth:InvokeServer(26)
             task.wait()
         end
@@ -66,7 +67,7 @@ end
 local function autoLoad()
     task.spawn(function()
         task.wait(0.75)
-        if Rayfield.flags.autolayout1 then
+        if Rayfield.Flags.autolayout1 then
             loadLayouts()
         end
     end)
@@ -77,8 +78,7 @@ local ToggleAutoRebirth = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autoRebirth",
     Callback = function(Value)
-        Rayfield.flags.autoRebirth = Value
-        if Value then
+        if Rayfield.Flags.autoRebirth then
             AutoRebirth()
         end
     end,
@@ -89,8 +89,7 @@ local ToggleAutoLayouts = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autolayout1",
     Callback = function(Value)
-        Rayfield.flags.autolayout1 = Value
-        if Value then
+        if Rayfield.Flags.autolayout1 then
             loadLayouts()
             AutoRebirth()
         end
@@ -102,7 +101,6 @@ local ToggleSecondLayout = Tab1:CreateToggle({
     CurrentValue = false,
     Flag = "autolayout2",
     Callback = function(Value)
-        Rayfield.flags.autolayout2 = Value
     end,
 })
 
@@ -122,8 +120,6 @@ local DropdownFirstLayout = Tab1:CreateDropdown({
     MultipleOptions = false,
     Flag = "layoutone",
     Callback = function(Option)
-        local selectedOption = Option[1]
-        Rayfield.flags.layoutone = selectedOption
     end,
 })
 
@@ -134,8 +130,6 @@ local DropdownSecondLayout = Tab1:CreateDropdown({
     MultipleOptions = false,
     Flag = "layouttwo",
     Callback = function(Option)
-        local selectedOption = Option[1]
-        Rayfield.flags.layouttwo = selectedOption
     end,
 })
 
@@ -146,8 +140,8 @@ local Section2 = Tab2:CreateSection("Boxes")
 
 local function BoxOpener()
     task.spawn(function()
-        while Tab2.flags.autoOpenBox do
-            if getgenv().TargetBox == "Open All Boxes" then
+        while Rayfield.Flags.autoOpenBox do
+            if Rayfield.Flags.TargetBox == "Open All Boxes" then
                 
                 local boxList = {
                                 "Regular","Unreal","Inferno","Luxury","Red-Banded",
@@ -160,7 +154,7 @@ local function BoxOpener()
                     wait()
                 end
             else
-                ReplicatedStorage.MysteryBox:InvokeServer(getgenv().TargetBox)
+                ReplicatedStorage.MysteryBox:InvokeServer(Rayfield.Flags.TargetBox)
                 wait()
             end
         end
@@ -172,7 +166,6 @@ local ToggleAutoTpBox = Tab2:CreateToggle({
     CurrentValue = false,
     Flag = "autoTpBox",
     Callback = function(Value)
-        Tab2.flags.autoTpBox = Value
     end,
 })
 
@@ -181,8 +174,7 @@ local ToggleAutoOpenBox = Tab2:CreateToggle({
     CurrentValue = false,
     Flag = "autoOpenBox",
     Callback = function(Value)
-        Tab2.flags.autoOpenBox = Value
-        if Value then
+        if Rayfield.Flags.autoOpenBox then
             BoxOpener()
         end
     end,
@@ -196,17 +188,12 @@ local DropdownBox = Tab2:CreateDropdown({
                 "Spectral","Magnificent","Heavenly","Pumkin","Festive",
                 "Easter","Birthday","Cake Raffle","Twitch",
             },
-    CurrentOption = "Regular",
+    CurrentOption = "Open All Boxes",
     MultipleOptions = false,
     Flag = "TargetBox",
     Callback = function(Option)
-        getgenv().TargetBox = Option[1]
     end,
 })
-
-if getgenv().TargetBox == nil then
-    getgenv().TargetBox = "Open All Boxes"
-end
 
 task.spawn(function()
     local lastPos = LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -215,7 +202,7 @@ task.spawn(function()
         local char = LocalPlayer.Character
         local bxs = Workspace.Boxes
         
-        if Tab2.flags.autoTpBox and #bxs:GetChildren() >= 1 then
+        if Rayfield.Flags.autoTpBox and #bxs:GetChildren() >= 1 then
             for _, v in ipairs(bxs:GetChildren()) do
                 char:MoveTo(v.Position)
                 wait(0.75)
@@ -242,7 +229,7 @@ local function teleportToNPC()
     end
 
     local Map = Workspace.Map
-    local npcName = getgenv().NpcName
+    local npcName = Rayfield.Flags.NpcName
     local npcLocations = {
         ["Masked Man"] = function() return Workspace.Market.UpperTorso.CFrame end,
         ["Fargield"] = function() return Map.Fargield.UpperTorso.CFrame end,
@@ -301,7 +288,7 @@ local ButtonTpBase = Tab3:CreateButton({
 local ButtonTpNpc = Tab3:CreateButton({
     Name = "Teleport To",
     Callback = function()
-        if getgenv().NpcName then 
+        if Rayfield.Flags.NpcName then 
             teleportToNPC()
         end
     end,
@@ -324,13 +311,8 @@ local ButtonTpNpc = Tab3:CreateButton({
     MultipleOptions = false,
     Flag = "NpcName",
     Callback = function(Option)
-        getgenv().NpcName = Option[1]
     end,
 })
-
-if getgenv().NpcName == nil then
-    getgenv().NpcName = "Masked Man"
-end
 
 local Section31 = Tab3:CreateSection("Random")
 
@@ -339,8 +321,7 @@ local ToggleAutoKick = Tab3:CreateToggle({
     CurrentValue = false,
     Flag = "autoKick",
     Callback = function(Value)
-        Tab3.flags.autoKick = Value
-        if Value then
+        if Rayfield.Flags.autoKick then
             KickPlayer()
         end
     end,
