@@ -6,8 +6,8 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "By Any1cake",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = nil,
-       FileName = "Big Hub"
+       FolderName = "Any1CakeScript",
+       FileName = "Miner's Haven"
     },
     Discord = {
        Enabled = false,
@@ -40,7 +40,7 @@ LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-local Tab1 = Window:CreateTab("Main", nil) Tab1.flags = {}
+local Tab1 = Window:CreateTab("Main", nil)
 local MainSection = Tab1:CreateSection("Rebirth")
 
 local Value = LocalPlayer.Rebirths
@@ -142,7 +142,7 @@ local DropdownSecondLayout = Tab1:CreateDropdown({
 
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 
-local Tab2 = Window:CreateTab("Boxes", nil) Tab2.flags = {}
+local Tab2 = Window:CreateTab("Boxes", nil)
 local Section2 = Tab2:CreateSection("Boxes")
 
 local function BoxOpener()
@@ -225,7 +225,7 @@ spawn(function()
     end
 end)
 
-local Tab3 = Window:CreateTab("Misc", nil) Tab3.flags = {}
+local Tab3 = Window:CreateTab("Misc", nil)
 local Section3 = Tab3:CreateSection("Npc")
 
 local function teleportToNPC()
