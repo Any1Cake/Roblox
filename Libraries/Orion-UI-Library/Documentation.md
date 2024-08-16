@@ -3,71 +3,55 @@ This documentation is for the stable release of Orion Library.
 
 ## Booting the Library
 ```lua
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Orion-UI-Library/source.lua', true))()
+
 ```
 
 
 
 ## Creating a Window
 ```lua
-local Window = OrionLib:MakeWindow({Name = "Title of the library", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
-
---[[
-Name = <string> - The name of the UI.
-HidePremium = <bool> - Whether or not the user details shows Premium status or not.
-SaveConfig = <bool> - Toggles the config saving in the UI.
-ConfigFolder = <string> - The name of the folder where the configs are saved.
-IntroEnabled = <bool> - Whether or not to show the intro animation.
-IntroText = <string> - Text to show in the intro animation.
-IntroIcon = <string> - URL to the image you want to use in the intro animation.
-Icon = <string> - URL to the image you want displayed on the window.
-CloseCallback = <function> - Function to execute when the window is closed.
-]]
+local Window = OrionLib:MakeWindow({
+	Name = "Title of the library", -- The name of the UI.
+	HidePremium = false, -- Whether or not the user details shows Premium status or not.
+	SaveConfig = true, -- Toggles the config saving in the UI.
+	ConfigFolder = "OrionTest", -- The name of the folder where the configs are saved.
+	IntroEnabled = true, -- Whether or not to show the intro animation.
+	IntroText = "OrionTest", -- Text to show in the intro animation.
+	IntroIcon = "OrionTest", -- URL to the image you want to use in the intro animation.
+	Icon = nil, -- URL to the image you want displayed on the window.
+	CloseCallback = function() 
+	-- Function to execute when the window is closed.
+	end
+})
 ```
 
 
 
 ## Creating a Tab
 ```lua
-local Tab = Window:MakeTab({
-	Name = "Tab 1",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+local Tab1 = Window:MakeTab({
+	Name = "OrionTest", -- The name of the tab.
+	Icon = "rbxassetid://4483345998", -- The icon of the tab.
+	PremiumOnly = false -- Makes the tab accessible to Sirus Premium users only.
 })
-
---[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
-]]
 ```
 ## Creating a Section
 ```lua
-local Section = Tab:AddSection({
-	Name = "Section"
+local Section = Tab1:AddSection({
+	Name = "OrionTest" -- The name of the section.
 })
-
---[[
-Name = <string> - The name of the section.
-]]
 ```
 You can add elements to sections the same way you would add them to a tab normally.
 
 ## Notifying the user
 ```lua
 OrionLib:MakeNotification({
-	Name = "Title!",
-	Content = "Notification content... what will it say??",
-	Image = "rbxassetid://4483345998",
-	Time = 5
+	Name = "Title!", -- The name of the notification.
+	Content = "Notification content... what will it say??", -- The content of the notification.
+	Image = "rbxassetid://4483345998", -- The icon of the notification.
+	Time = 5 -- The duration of the notfication.
 })
-
---[[
-Title = <string> - The title of the notification.
-Content = <string> - The content of the notification.
-Image = <string> - The icon of the notification.
-Time = <number> - The duration of the notfication.
-]]
 ```
 
 
