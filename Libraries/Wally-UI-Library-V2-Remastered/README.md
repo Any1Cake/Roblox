@@ -1,3 +1,9 @@
+# Wally UI Library V2 Remastered
+Original Repo : 
+```
+https://github.com/TheAbsolutionism/Wally-GUI-Library-V2-Remastered
+```
+
 local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Wally-V2-Remastered/Library-Code.lua', true))()
 
     library.options.underlinecolor = 'rainbow' -- makes the underline of each "window" rainbow
