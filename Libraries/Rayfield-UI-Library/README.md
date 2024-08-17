@@ -1,9 +1,7 @@
 # 𝙍𝙖𝙮𝙛𝙞𝙚𝙡𝙙 𝙄𝙣𝙩𝙚𝙧𝙛𝙖𝙘𝙚 𝙎𝙪𝙞𝙩𝙚
 # Booting the Library
 ## Secure Mode
-
 ### ⚠️ WARNING
-
 If the game you're trying to run Rayfield Interface Suite on, is detecting or crashing when you use Rayfield Interface Suite, try using Secure Mode by Placing this
 ```lua
 getgenv().SecureMode = true
@@ -11,29 +9,21 @@ getgenv().SecureMode = true
 above the initial Rayfield loadstring
 
 ### ℹ NOTE
-
 This may cause some elements of the UI to look lower quality or may increase loading times slightly
 
 ## Enabling Configuration Saving
-
-1. Enable ConfigurationSaving in the CreateWindow function
-
-2. Choose an appropiate FileName in the CreateWindow function
-
-3. Choose an unique flag identifier for each supported element you create
-
-4. Place Rayfield:LoadConfiguration() at the bottom of all your code
+- Enable ConfigurationSaving in the CreateWindow function
+- Choose an appropiate FileName in the CreateWindow function
+- Choose an unique flag identifier for each supported element you create
+- Place Rayfield:LoadConfiguration() at the bottom of all your code
 
 ## Loading the library
-
 ```lua
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Any1Cake/Roblox/main/Libraries/Rayfield-UI-Library/source.lua'))()
 ```
 
 # Windows in Rayfield
-
 ## Creating a Window
-
 ```lua
 local Window = Rayfield:CreateWindow({
    Name = "Rayfield Example Window",
@@ -83,7 +73,6 @@ Rayfield:Destroy()
 ```
 
 # Adding interactive elements
-
 ## Notifying the user
 ```lua
 Rayfield:Notify({
