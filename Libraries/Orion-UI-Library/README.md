@@ -56,7 +56,7 @@ OrionLib:MakeNotification({
 local Button = Tab:AddButton({
 	Name = "Button!", -- The name of the button.
 	Callback = function() -- The function of the button.
-      		print("button pressed")
+      	print("button pressed")
   	end
 })
 ```
@@ -67,7 +67,7 @@ local Toggle = Tab:AddToggle({
 	Name = "This is a toggle!", -- The name of the toggle.
 	Default = false, -- The default value of the toggle.
 	Save = true, -- Set this to true if you want to save this element in config
-	Flag = "Toggle" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Flag = "Toggle1" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value) 
 		print(Value) -- The function of the toggle.
 	end    
@@ -85,7 +85,7 @@ local ColorPicker = Tab:AddColorpicker({
 	Name = "Colorpicker", -- The name of the colorpicker.
 	Default = Color3.fromRGB(255, 0, 0), -- The default value of the colorpicker.
 	Save = true, -- Set this to true if you want to save this element in config
-	Flag = "ColorPicker" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Flag = "ColorPicker1" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value) 
 		print(Value) -- The function of the colorpicker.
 	end	  
@@ -108,7 +108,7 @@ local Slider = Tab:AddSlider({
 	ValueName = "Slider" -- The text after the value number.
 	Color = Color3.fromRGB(255,255,255),
 	Save = true, -- Set this to true if you want to save this element in config
-	Flag = "Slider" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Flag = "Slider1" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value)
 		print(Value) -- The function of the slider.
 	end    
@@ -159,7 +159,7 @@ local Bind = Tab:AddBind({
 	Default = Enum.KeyCode.E, -- The default value of the bind.
 	Hold = false, -- Makes the bind work like: Holding the key > The bind returns true, Not holding the key > Bind returns false.
 	Save = true, -- Set this to true if you want to save this element in config
-	Flag = "KeyBind" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Flag = "KeyBind1" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function()
 		print("press") -- The function of the bind.
 	end    
@@ -178,7 +178,7 @@ local Dropdown = Tab:AddDropdown({
 	Default = "1", -- The default value of the dropdown.
 	Options = {"1", "2"}, -- The options in the dropdown.
 	Save = true, -- Set this to true if you want to save this element in config
-	Flag = "Dropdown" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
+	Flag = "Dropdown1" -- A flag is the identifier for the config file, make sure every element has a different flag if you're using SaveConfig to ensure no overlaps
 	Callback = function(Value)
 		print(Value) -- The function of the dropdown.
 	end    
@@ -210,10 +210,10 @@ local Toggle = Tab1:AddToggle({
     Name = "Toggle",
     Default = true,
     Save = true,
-    Flag = "Toggle"
+    Flag = "Toggle1"
 })
 
-print(OrionLib.Flags["Toggle"].Value) -- prints the value of the toggle.
+print(OrionLib.Flags["Toggle1"].Value) -- prints the value of the toggle.
 ```
 Flags only work with the toggle, slider, dropdown, bind, and colorpicker.
 
