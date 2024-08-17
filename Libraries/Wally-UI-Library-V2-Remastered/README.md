@@ -1,4 +1,4 @@
-# Wally UI Library V2 Remastered
+# **Wally UI Library V2 Remastered**
 Original Repo : 
 ```
 https://github.com/TheAbsolutionism/Wally-GUI-Library-V2-Remastered
@@ -17,6 +17,7 @@ library.options.underlinecolor = 'rainbow' -- makes the underline of each "windo
 library.options.toggledisplay = 'Fill' -- Applies to all toggles, [Fill]: OFF = RED and ON = GREEN  or [CHECK]: OFF = BLANK and ON = CHECKMARK
 local Window = library:CreateWindow('Example-Window') -- 1st Arg = name of window
 ```
+
 ## Creating a Section
 ```lua
 local Section = Window:Section('Section',(true)) -- 1st Arg = Text Displayer, 2nd Arg = want TextColor to be rainbow, TRUE = yes, FALSE or NIL = NO
@@ -30,7 +31,7 @@ local Button = Window:Button("Button",{ -- Text Displayer
     print("Button Pressed")
 end)
 ```
-Use 'Button.Fire()' to fire function connected to the button without clicking
+Use `Button.Fire()` to fire function connected to the button without clicking
 
 ## Creating a Toggle
 ```lua
@@ -42,6 +43,7 @@ local Toggle = Window:Toggle("Toggle",{ --Text Display
     print("Toggle")
 end)
 ```
+
 Returns function to turn toggle on or off through script instead of click
 
 ### Updating a Toggle
