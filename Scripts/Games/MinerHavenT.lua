@@ -40,24 +40,24 @@ LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
-local Tab1 = Window:CreateTab("Main", nil) Tab1.flags = {}
-local MainSection = Tab1:CreateSection("Rebirth")
+local MainTab = Window:CreateTab("Main", nil) MainTab.flags = {}
+local MainSection = MainTab:CreateSection("Rebirth")
 
 local Value = LocalPlayer.Rebirths
 
 local function loadLayouts()
     task.spawn(function()
-        ReplicatedStorage.Layouts:InvokeServer("Load", Tab1.flags.layoutone)
+        ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.flags.layoutone)
         task.wait(getgenv().duration)
-        if Tab1.flags.autolayout2 then
-            ReplicatedStorage.Layouts:InvokeServer("Load", Tab1.flags.layouttwo)
+        if MainTab.flags.autolayout2 then
+            ReplicatedStorage.Layouts:InvokeServer("Load", MainTab.flags.layouttwo)
         end
     end)
 end
 
 local function AutoRebirth()
     task.spawn(function()
-        while Tab1.flags.autoRebirth do
+        while MainTab.flags.autoRebirth do
             ReplicatedStorage.Rebirth:InvokeServer(26)
             task.wait()
         end
@@ -67,30 +67,30 @@ end
 local function autoLoad()
     task.spawn(function()
         task.wait(0.75)
-        if Tab1.flags.autolayout1 then
+        if MainTab.flags.autolayout1 then
             loadLayouts()
         end
     end)
 end
 
-local ToggleAutoRebirth = Tab1:CreateToggle({
+local ToggleAutoRebirth = MainTab:CreateToggle({
     Name = "Auto Rebirth",
     CurrentValue = false,
     Flag = "autoRebirth",
     Callback = function(Value)
-        Tab1.flags.autoRebirth = Value
+        MainTab.flags.autoRebirth = Value
         if Value then
             AutoRebirth()
         end
     end,
 })
 
-local ToggleAutoLayouts = Tab1:CreateToggle({
+local ToggleAutoLayouts = MainTab:CreateToggle({
     Name = "Auto Layouts",
     CurrentValue = false,
     Flag = "autolayout1",
     Callback = function(Value)
-        Tab1.flags.autolayout1 = Value
+        MainTab.flags.autolayout1 = Value
         if Value then
             loadLayouts()
             AutoRebirth()
@@ -98,16 +98,16 @@ local ToggleAutoLayouts = Tab1:CreateToggle({
     end,
 })
 
-local ToggleSecondLayout = Tab1:CreateToggle({
+local ToggleSecondLayout = MainTab:CreateToggle({
     Name = "Enable Second Layout",
     CurrentValue = false,
     Flag = "autolayout2",
     Callback = function(Value)
-        Tab1.flags.autolayout2 = Value
+        MainTab.flags.autolayout2 = Value
     end,
 })
 
-local TimeInput = Tab1:CreateInput({
+local TimeInput = MainTab:CreateInput({
     Name = "Time Between Layouts",
     PlaceholderText = "Input Number",
     RemoveTextAfterFocusLost = false,
@@ -116,7 +116,7 @@ local TimeInput = Tab1:CreateInput({
     end,
 })
 
-local DropdownFirstLayout = Tab1:CreateDropdown({
+local DropdownFirstLayout = MainTab:CreateDropdown({
     Name = "First Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = "Layout1",
@@ -124,11 +124,11 @@ local DropdownFirstLayout = Tab1:CreateDropdown({
     Flag = "layoutone",
     Callback = function(Option)
         local selectedOption = Option[1]
-        Tab1.flags.layoutone = selectedOption
+        MainTab.flags.layoutone = selectedOption
     end,
 })
 
-local DropdownSecondLayout = Tab1:CreateDropdown({
+local DropdownSecondLayout = MainTab:CreateDropdown({
     Name = "Second Layout",
     Options = {"Layout1","Layout2","Layout3"},
     CurrentOption = "Layout1",
@@ -136,18 +136,17 @@ local DropdownSecondLayout = Tab1:CreateDropdown({
     Flag = "layouttwo",
     Callback = function(Option)
         local selectedOption = Option[1]
-        Tab1.flags.layouttwo = selectedOption
+        MainTab.flags.layouttwo = selectedOption
     end,
 })
 
 Value:GetPropertyChangedSignal("Value"):Connect(autoLoad)
 
-local Tab2 = Window:CreateTab("Boxes", nil) Tab2.flags = {}
-local Section2 = Tab2:CreateSection("Boxes")
+local Section2 = MainTab:CreateSection("Boxes")
 
 local function BoxOpener()
     task.spawn(function()
-        while Tab2.flags.autoOpenBox do
+        while MainTab.flags.autoOpenBox do
             if getgenv().TargetBox == "Open All Boxes" then
                 
                 local boxList = {
@@ -168,28 +167,28 @@ local function BoxOpener()
     end)
 end
 
-local ToggleAutoTpBox = Tab2:CreateToggle({
+local ToggleAutoTpBox = MainTab:CreateToggle({
     Name = "Auto Tp To Boxes",
     CurrentValue = false,
     Flag = "autoTpBox",
     Callback = function(Value)
-        Tab2.flags.autoTpBox = Value
+        MainTab.flags.autoTpBox = Value
     end,
 })
 
-local ToggleAutoOpenBox = Tab2:CreateToggle({
+local ToggleAutoOpenBox = MainTab:CreateToggle({
     Name = "Auto Open Boxes",
     CurrentValue = false,
     Flag = "autoOpenBox",
     Callback = function(Value)
-        Tab2.flags.autoOpenBox = Value
+        MainTab.flags.autoOpenBox = Value
         if Value then
             BoxOpener()
         end
     end,
 })
 
-local DropdownBox = Tab2:CreateDropdown({
+local DropdownBox = MainTab:CreateDropdown({
     Name = "Select Box",
     Options = {
                 "Open All Boxes",
@@ -216,7 +215,7 @@ spawn(function()
         local char = LocalPlayer.Character
         local bxs = WorkSpace.Boxes
         
-        if Tab2.flags.autoTpBox and #bxs:GetChildren() >= 1 then
+        if MainTab.flags.autoTpBox and #bxs:GetChildren() >= 1 then
             for _, v in ipairs(bxs:GetChildren()) do
                 char:MoveTo(v.Position)
                 wait(0.75)
@@ -232,8 +231,8 @@ spawn(function()
     end
 end)
 
-local Tab3 = Window:CreateTab("Misc", nil) Tab3.flags = {}
-local Section3 = Tab3:CreateSection("Npc")
+local MiscTab = Window:CreateTab("Misc", nil) MiscTab.flags = {}
+local Section3 = MiscTab:CreateSection("Npc")
 
 local function teleportToNPC()
     local plr = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -288,7 +287,7 @@ local function KickPlayer()
     end)
 end
 
-local ButtonTpBase = Tab3:CreateButton({
+local ButtonTpBase = MiscTab:CreateButton({
     Name = "Teleport To Base",
     Callback = function()
         for _, v in pairs(WorkSpace.Tycoons:GetDescendants()) do
@@ -299,7 +298,7 @@ local ButtonTpBase = Tab3:CreateButton({
     end,
 })
 
-local ButtonTpNpc = Tab3:CreateButton({
+local ButtonTpNpc = MiscTab:CreateButton({
     Name = "Teleport To",
     Callback = function()
         if getgenv().NpcName then 
@@ -308,7 +307,7 @@ local ButtonTpNpc = Tab3:CreateButton({
     end,
 })
 
- local DropdownNpc = Tab3:CreateDropdown({
+ local DropdownNpc = MiscTab:CreateDropdown({
     Name = "Select Npc",
     Options = {
                 "Masked Man",
@@ -333,21 +332,21 @@ if getgenv().NpcName == nil then
     getgenv().NpcName = "Masked Man"
 end
 
-local Section31 = Tab3:CreateSection("Random")
+local Section31 = MiscTab:CreateSection("Random")
 
-local ToggleAutoKick = Tab3:CreateToggle({
+local ToggleAutoKick = MiscTab:CreateToggle({
     Name = "Auto Kick",
     CurrentValue = false,
     Flag = "autoKick",
     Callback = function(Value)
-        Tab3.flags.autoKick = Value
+        MiscTab.flags.autoKick = Value
         if Value then
             KickPlayer()
         end
     end,
 })
 
-local Button = Tab3:CreateButton({
+local Button = MiscTab:CreateButton({
     Name = "Destroy UI",
     Callback = function()
         Rayfield:Destroy()
