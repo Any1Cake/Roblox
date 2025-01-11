@@ -4,7 +4,7 @@ warn("Anti afk ran")
 game:GetService("VirtualUser"):CaptureController()
 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
 end)
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/main/ui%20libs2"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Any1Cake/Roblox/refs/heads/main/Libraries/ui%20libs2.txt"))()
 local example = library:CreateWindow({
   text = "Trucking Empire"
 })
