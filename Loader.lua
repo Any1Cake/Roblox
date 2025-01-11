@@ -11,6 +11,7 @@ local games = {
     [258258996] = "Miner's Haven",
     [3398014311] = "Restaurant Tycoon 2",
     [9772878203] = "Raise a Floppa 2"
+    [7345818711] = "Trucking Empire"
 }
 
 local isGameFound = false
