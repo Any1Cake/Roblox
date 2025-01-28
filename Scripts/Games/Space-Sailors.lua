@@ -203,7 +203,6 @@ createLabel("Manage Tab", UDim2.new(1, 0, 0.4, 0), UDim2.new(0, 0, 0, 0), mainFr
 
 local Button1 = createButton("Start Script", UDim2.new(0.9, 0, 0.38, 0), UDim2.new(0.05, 0, 0.5, 0), nil, mainFrame, 
 	function() 
-		moonTab()
 		mainFrame.Visible = false
 		-- Define logic for each Place ID
 		if currentPlaceId == 5000143962 then -- Earth
