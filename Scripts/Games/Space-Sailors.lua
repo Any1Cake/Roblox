@@ -1,4 +1,12 @@
--- Get the current Place ID
+--[[
+- Earth = 5000143962
+- Lunar Gateway Space Station = 5515926734
+- Moon = 5534753074
+- Mars Orbit = 6458953928
+- Mars = 61199822580
+- Ceres Orbit = 6686215787
+- Ceres =]]
+
 local currentPlaceId = game.PlaceId
 
 local screenGui = Instance.new("ScreenGui")
@@ -84,26 +92,23 @@ local function createButton(text, size, position, color, parent, callback)
 	return button
 end
 
-local function earthTab()
-	-- Define the target CFrames
+local function earthScript()
 	local cframes = {
 		CFrame.new(-2602.50781, 339.165161, 1922.82642, -0.638691902, 4.8589226e-09, -0.769462585, 1.0652087e-09, 1, 5.43052048e-09, 0.769462585, 2.64879119e-09, -0.638691902),
-		CFrame.new(-2567.93677, 330.28067, 1869.33203, -0.717625916, -6.37488498e-08, 0.696428776, 2.42485743e-09, 1, 9.40354425e-08, -0.696428776, 6.91710085e-08, -0.717625916), -- Replace with your second target CFrame
+		CFrame.new(-2567.93677, 330.28067, 1869.33203, -0.717625916, -6.37488498e-08, 0.696428776, 2.42485743e-09, 1, 9.40354425e-08, -0.696428776, 6.91710085e-08, -0.717625916),
 	}
 
-	-- Get the player
 	local player = game.Players.LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
-	-- Teleport through each CFrame with a delay
 	for _, targetCFrame in ipairs(cframes) do
 		humanoidRootPart.CFrame = targetCFrame
-		task.wait(1) -- Wait 1 second before teleporting to the next CFrame
+		task.wait(1)
 	end
 end
  
-local function moonTab()
+local function setWaypoint()
 	local mainFrame = createFrame("MainFrame", UDim2.new(0, 160, 0, 250), UDim2.new(0.5, -80, 0.5, -125), screenGui)
 	createLabel("Manage Tab", UDim2.new(1, 0, 0.15, 0), UDim2.new(0, 0, 0, 0), mainFrame)
 
@@ -120,7 +125,8 @@ local function moonTab()
 		table.insert(historyButtons, button)
 	end
 
-	createButton("Set Waypoint", nil, UDim2.new(0.05, 0, 0.2, 0), nil, mainFrame, function()
+	createButton("Set Waypoint", nil, UDim2.new(0.05, 0, 0.2, 0), nil, mainFrame, 
+		function()
 		local namePromptFrame = createFrame("NamePromptFrame", UDim2.new(0, 160, 0, 100), UDim2.new(0.5, -80, 0.5, -80), screenGui)
 
 		local nameTextBox = Instance.new("TextBox")
@@ -131,7 +137,8 @@ local function moonTab()
 		nameTextBox.TextScaled = true
 		nameTextBox.Parent = namePromptFrame
 
-		createButton("Done", nil, UDim2.new(0.05, 0, 0.7, 0), nil, namePromptFrame, function()
+		createButton("Done", nil, UDim2.new(0.05, 0, 0.7, 0), nil, namePromptFrame, 
+			function()
 			if nameTextBox.Text ~= "" and nameTextBox.Text ~= "Enter waypoint name" then
 				local waypoint = {
 					position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position,
@@ -169,32 +176,32 @@ local function moonTab()
 
 	createButton("Goto Waypoint", nil, UDim2.new(0.05, 0, 0.4, 0), nil, mainFrame, 
 		function()
-			if #waypoints > 0 then
-				local lastWaypoint = waypoints[#waypoints]
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(lastWaypoint.position)
-				print("Teleported to waypoint: " .. lastWaypoint.name)
-			else
-				print("No waypoint set!")
-			end
-		end)
+		if #waypoints > 0 then
+			local lastWaypoint = waypoints[#waypoints]
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(lastWaypoint.position)
+			print("Teleported to waypoint: " .. lastWaypoint.name)
+		else
+			print("No waypoint set!")
+		end
+	end)
 
 	createButton("View History", nil, UDim2.new(0.05, 0, 0.6, 0), nil, mainFrame, 
 		function()
-			historyFrame.Visible = not historyFrame.Visible
-		end)
+		historyFrame.Visible = not historyFrame.Visible
+	end)
 
 	createButton("Clear History", nil, UDim2.new(0.05, 0, 0.8, 0), nil, mainFrame, 
 		function()
-			waypoints = {}
-			for _, button in ipairs(historyButtons) do
-				button.Text = "Not Set"
-				button.MouseButton1Click:Connect(function() end) -- Clear button functionality
-			end
-			print("Waypoint history cleared!")
-		end)
+		waypoints = {}
+		for _, button in ipairs(historyButtons) do
+			button.Text = "Not Set"
+			button.MouseButton1Click:Connect(function() end) -- Clear button functionality
+		end
+		print("Waypoint history cleared!")
+	end)
 end
 
-local function marsTab()
+local function marsScript()
 	
 end
 
@@ -203,34 +210,20 @@ createLabel("Manage Tab", UDim2.new(1, 0, 0.4, 0), UDim2.new(0, 0, 0, 0), mainFr
 
 local Button1 = createButton("Start Script", UDim2.new(0.9, 0, 0.38, 0), UDim2.new(0.05, 0, 0.5, 0), nil, mainFrame, 
 	function() 
-		mainFrame.Visible = false
-		-- Define logic for each Place ID
-		if currentPlaceId == 5000143962 then -- Earth
-			print("Running script for Place ID", currentPlaceId)
-			earthTab()
+	mainFrame.Visible = false
+	if currentPlaceId == 5000143962 then -- Earth
+		print("Running script for Place ID", currentPlaceId)
+		earthScript()
 
-		elseif currentPlaceId == 5534753074 then -- Moon
-			print("Running script for Place ID", currentPlaceId)
-			moonTab()
+	elseif currentPlaceId == 5534753074 or 61199822580 then -- Moon & Mars & Ceres
+		print("Running script for Place ID", currentPlaceId)
+		setWaypoint()
 
-		elseif currentPlaceId == 567890123 then
-			-- Logic for Place ID 567890123
-			print("Running script for Place ID", currentPlaceId)
-			-- Add the code specific to this place here
-			-- Example: Display a GUI
-			local player = game.Players.LocalPlayer
-			local gui = Instance.new("ScreenGui")
-			local textLabel = Instance.new("TextLabel")
-			textLabel.Size = UDim2.new(0.5, 0, 0.1, 0)
-			textLabel.Position = UDim2.new(0.25, 0, 0.45, 0)
-			textLabel.Text = "Welcome to Place 567890123!"
-			textLabel.Parent = gui
-			gui.Parent = player:WaitForChild("PlayerGui")
+	elseif currentPlaceId == 567890123 then
+		print("Running script for Place ID", currentPlaceId)
 
-		else
-			-- If the Place ID is not recognized
-			warn("No script logic defined for this Place ID:", currentPlaceId)
-		end
+	else
+		warn("No script logic defined for this Place ID:", currentPlaceId)
+	end
 
-	end)
-
+end)
