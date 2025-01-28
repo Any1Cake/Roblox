@@ -209,7 +209,7 @@ local Button1 = createButton("Start Script", UDim2.new(0.9, 0, 0.38, 0), UDim2.n
 			print("Running script for Place ID", currentPlaceId)
 			earthTab()
 
-		elseif currentPlaceId == 5534753974 then -- Moon
+		elseif currentPlaceId == 5534753074 then -- Moon
 			print("Running script for Place ID", currentPlaceId)
 			moonTab()
 
