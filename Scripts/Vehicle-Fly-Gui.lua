@@ -8,7 +8,6 @@ CoreGui:SetCore("SendNotification", {
 })
 
 --Admin Detector in Server
-loadstring(game:HttpGet('https://raw.githubusercontent.com/MainScripts352/MainScripts352/main/Admin'))()
 --
 
 local ScreenGui = Instance.new("ScreenGui")
